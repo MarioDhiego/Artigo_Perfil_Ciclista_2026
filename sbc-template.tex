@@ -189,6 +189,56 @@ Governo Incentiva Uso    & Não (79.7\%) & Parcialmente (44.7\%) & Não (84.8\%)
 \end{table}
 
 
+\subsection{Validação Cruzada: PAM versus Algoritmos Alternativos}
+
+Para atestar a estabilidade estrutural e a validade topológica dos três perfis descobertos, o particionamento oficial gerado pelo algoritmo PAM (com métrica de Gower) foi submetido a uma validação cruzada contra as partições geradas por K-Means, K-Modes, Modelo Gaussiano (GMM) e Fuzzy C-Means. A análise das matrizes de concordância revela o comportamento de cada heurística perante a complexidade dos dados categóricos de mobilidade.
+
+\subsubsection{O Colapso do K-Means em Dados Categóricos}
+A comparação entre PAM e K-Means evidenciou a inadequação de métricas euclidianas clássicas para dados sociocomportamentais. O algoritmo K-Means sofreu um colapso de variância, alocando 77\% de toda a amostra (557 dos 727 ciclistas) num único super-grupo espúrio, denominado Grupo Y. 
+\begin{itemize}
+    \item Este super-grupo absorveu quase a totalidade dos três perfis do PAM (274 do Perfil 1, 133 do Perfil 2 e 150 do Perfil 3).
+    \item A incapacidade do K-Means em calcular médias aritméticas válidas para respostas qualitativas resultou numa severa aglomeração (\textit{crowding problem}), impossibilitando a extração de qualquer padrão comportamental acionável para políticas públicas.
+\end{itemize}
+
+\subsubsection{Convergência Parcial com o K-Modes}
+Ao contrário do K-Means, o K-Modes (desenhado para dados categóricos) demonstrou forte concordância topológica com os perfis extremos do PAM, validando a sua existência:
+\begin{itemize}
+    \item \textbf{Alinhamento do Perfil Principal:} O Perfil 1 do PAM obteve forte correspondência com o Perfil A do K-Modes, partilhando 205 ciclistas (28\% da amostra global).
+    \item \textbf{Alinhamento do Perfil Específico:} O Perfil 3 do PAM alinhou-se de forma substancial com o Perfil B do K-Modes (164 ciclistas partilhados).
+    \item \textbf{Divergência no Perfil Intermédio:} O Perfil 2 apresentou alta fragmentação, distribuindo-se de forma quase equitativa entre os três grupos do K-Modes. Isto sugere que o K-Modes, ao basear-se apenas na moda estatística (\textit{Simple Matching}), perde sensibilidade analítica nos grupos de transição, onde a métrica de Gower (utilizada pelo PAM) é mais eficaz ao ponderar semelhanças parciais.
+\end{itemize}
+
+\subsubsection{A Sobre-segmentação do Modelo Gaussiano (GMM)}
+O modelo probabilístico Gaussiano (GMM) utilizou o Critério de Informação Bayesiano (BIC) para definir o número ideal de agrupamentos, convergindo autonomamente para $K=4$. A introdução deste quarto grupo revela uma tentativa do algoritmo de acomodar a variância esparsa dos dados:
+\begin{itemize}
+    \item O Perfil 1 (PAM) encontrou o seu núcleo no Grupo 2 do GMM (209 ciclistas).
+    \item O Perfil 3 (PAM) consolidou-se solidamente no Grupo 3 do GMM (153 ciclistas).
+    \item A fragmentação severa ocorreu novamente no Perfil 2, que se diluiu por todos os quatro clusters gaussianos. A criação do Grupo 4 (GMM), com 82 ciclistas, capta micro-comportamentos que o PAM optou por aglutinar para manter a parcimónia analítica. No contexto de planeamento urbano, um modelo mais limpo ($K=3$) é preferível a um modelo sobre-segmentado.
+\end{itemize}
+
+\subsubsection{A Diluição das Fronteiras no Fuzzy C-Means}
+A aplicação da lógica difusa (\textit{Fuzzy C-Means}) com os dados forçados a um formato numérico replicou parcialmente a falha do K-Means, embora com menor agressividade.
+\begin{itemize}
+    \item Ocorreu uma forte polarização binária: o Grupo Beta absorveu 43\% da amostra (316 ciclistas) e o Grupo Gama absorveu 38\% (275 ciclistas), deixando o Grupo Alpha esvaziado (19\%).
+    \item O Perfil 1 do PAM foi drasticamente fraturado entre o Grupo Beta (181) e o Grupo Gama (104).
+    \item O coeficiente de pertinência difusa (\textit{fuzziness}) não conseguiu lidar com a sobreposição categórica, resultando num esbatimento das fronteiras comportamentais que o PAM conseguiu delinear de forma muito mais nítida e interpretável através do isolamento de medoides reais.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \begin{figure}
     \centering
     \includegraphics[width=1\linewidth]{Rplot02.jpeg}
