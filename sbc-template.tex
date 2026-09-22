@@ -226,25 +226,53 @@ A aplicação da lógica difusa (\textit{Fuzzy C-Means}) com os dados forçados 
 
 
 
+%$\begin{figure}
+%    \centering
+%    \includegraphics[width=0.75\linewidth]{Rplot02.jpeg}
+%    \caption{Algoritmos de Aprendizado de Máquina Não Supervisionados para amostra de Ciclista no Pará em 2026.}
+%    \label{fig:placeholder}
+%\end{figure}
+
+
+\begin{table}[htbp]
+\centering
+\caption{Avaliação da Métricas de Desempenho e Concordância dos Algoritmos Não Supervisionados}
+\label{tab:metricas_algoritmos_completa}
+\begin{tabular}{@{}l|c|c|c|c|c@{}}
+\hline \hline
+\textbf{Algoritmo}     & \textbf{Clusters} & \textbf{Silhueta ($S$)} & \textbf{Pseudo-$R^2$} & \textbf{Inércia} & \textbf{ARI} \\ 
+\hline \hline
+\textbf{1. PAM (Modelo Oficial)}   & 3      & 0,15     & 35,7\%     & 23,90  & \textbf{1,000} \\
+        2. CLARA                   & 3      & 0,07     & 22,9\%     & 27,64  & 0.292          \\
+        3. K-Modes                 & 3      & 0,07     & 35,4\%     & 23,16  & 0.405          \\
+        4. Modelo Gaussiano (GMM)  & 4      & 0,04     & 33,4\%     & 21,17  & 0.127          \\
+        5. DBSCAN                  & 5*     & -0,01    & 10,9\%     & 31,95  & 0.07           \\
+        6. Fuzzy C-Means           & 3      & 0,03     & 5,4\%      & 33,92  & 0.06           \\
+        7. K-Means                 & 3      & 0,08     & 3,2\%      & 34,72  & 0.09           \\ 
+\hline \hline
+\multicolumn{6}{l}{\footnotesize \textbf{Nota}: *O DBSCAN gerou 1 grupo principal de ruído espacial e 4 micro-clusters de densidade.} \\
+\end{tabular}
+\end{table}
+
+\newpage
+A análise quantitativa consolidada na Tabela~\ref{tab:metricas_algoritmos_completa} corrobora a robustez metodológica do algoritmo PAM para o escopo desta pesquisa. O particionamento em torno de medoides atingiu o Índice de Silhueta mais elevado do painel ($S = 0,15$), refletindo uma coesão estrutural significativamente superior às demais abordagens, ao mesmo tempo em que garantiu o maior percentual de variância explicada validada ($35,7\%$).
+
+Embora o Modelo Gaussiano (GMM) tenha apresentado a menor inércia espacial da tabela ($21,17$), este resultado configura-se como um artefato da sobre-segmentação. Ao forçar a criação de um quarto agrupamento ($K=4$), o modelo reduziu artificialmente a dispersão interna, mas sacrificou severamente a validade topológica, resultando em uma silhueta fraca ($S = 0,04$) e baixa concordância com a estrutura latente real (ARI $= 0,127$). O PAM manteve a parcimônia necessária para a interpretação sociológica ($K=3$) ostentando uma inércia altamente competitiva ($23,90$).
+
+Destaca-se também o colapso dos modelos baseados puramente em médias euclidianas. O K-Means obteve a pior capacidade explicativa do painel, capturando apenas 3,2\% da variância comportamental, aliada à maior dispersão interna (Inércia de $34,72$). Da mesma forma, o algoritmo probabilístico DBSCAN resultou em uma silhueta negativa ($-0,01$), provando a inexistência de esferas de densidade contínuas nos dados de \textit{survey}. 
+
+O algoritmo K-Modes figurou como o principal competidor topológico do PAM, apresentando o maior Índice Rand Ajustado (ARI $= 0,405$) entre as alternativas. Este valor indica uma concordância moderada-alta nas alocações, o que era esperado, dado que ambos os modelos são otimizados para lidar com vetores categóricos. Contudo, a flexibilidade analítica da métrica de Gower (PAM) sobre a contagem rígida do \textit{Simple Matching} (K-Modes) garantiu ao modelo oficial mais do que o dobro de qualidade estrutural na métrica de silhueta ($0,15$ contra $0,07$).
 
 
 
+\newpage
+\subsection{Validação Preditiva e Extração de Importância (Random Forest)}
+
+Na literatura tradicional, a Análise Discriminante Linear (LDA) é frequentemente empregada \textit{a posteriori} para validar a separação estatística dos clusters formados. No entanto, dada a natureza categórica e não-paramétrica dos dados de \textit{survey} desta pesquisa, a LDA apresenta limitações severas ligadas à exigência de normalidade multivariada e matrizes de covariância contínuas.
+
+Para contornar esta restrição metodológica, optou-se pelo uso do algoritmo \textit{Random Forest} como mecanismo de validação preditiva. A capacidade das florestas aleatórias em lidar nativamente com espaços topológicos não-lineares e variáveis mistas permite aferir a robustez das partições do algoritmo PAM. O modelo foi treinado para prever o rótulo do cluster de cada ciclista, onde uma alta acurácia preditiva (\textit{Out-of-Bag Error}) serve como prova matemática de que os grupos latentes possuem fronteiras comportamentais reais e generalizáveis. Adicionalmente, a extração da métrica \textit{Mean Decrease Gini} possibilitou identificar as \textit{features} mais determinantes na segregação dos utilizadores.
 
 
-
-
-
-
-
-
-
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{Rplot02.jpeg}
-    \caption{Algoritmos de Aprendizado de Máquina Não Supervisionados para amostra de Ciclista no Pará em 2026.}
-    \label{fig:placeholder}
-\end{figure}
 
 
 
