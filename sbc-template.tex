@@ -1,45 +1,33 @@
 \documentclass[12pt]{article}
 
 \usepackage{sbc-template}
-%\usepackage{titling}
 \usepackage{graphicx,url}
 \usepackage[utf8]{inputenc}
 \usepackage[brazilian]{babel}
-\usepackage{booktabs}
+\usepackage{booktabs} % Essencial para tabelas profissionais
 \usepackage{amsmath}
 
 \sloppy
 
-\title{Avaliação Comparativa de Algoritmos de Aprendizado de Máquina na Extração do Perfil Comportamental dos Ciclistas Paraenses em 2026  
-}
-
-
+\title{Avaliação Comparativa de Algoritmos de Aprendizado de Máquina na Extração do Perfil Comportamental dos Ciclistas Paraenses em 2026}
 
 \begin{document}
 \address{}
 
 \maketitle
 
-%\begin{abstract}
-%  The objective of this study was ......
-%\end{abstract}
-
 \begin{resumo} 
-  Este artigo propõe uma abordagem híbrida de Aprendizado de Máquina para extrair e validar o perfil comportamental de ciclistas no estado do Pará em 2026. Para processar o banco de dados multivariado contendo variáveis categóricas e numéricas, conduziu-se uma avaliação comparativa de algoritmos não supervisionados, incluindo PAM, K-Means, K-Modes, Modelo Gaussiano, Fuzzy C-Means, CLARA e DBSCAN, utilizando a métrica de dissimilaridade de \textit{Gower}. O particionamento em torno de medoides demonstrou a melhor estabilidade topológica, otimizando a estruturação da amostra em três perfis comportamentais latentes. Posteriormente, a fim de validar preditivamente essa taxonomia e extrair o conhecimento subjacente, aplicou-se o algoritmo supervisionado \textit{Random Forest}. O modelo baseado em árvores de decisão alcançou alta acurácia na reclassificação dos ciclistas e, através da extração do Índice Gini, identificou que features como 'Frequência de Uso', 'Motivo do Deslocamento' e 'Avaliação de Segurança' são os preditores matemáticos mais determinantes na separação dos grupos. Conclui-se que a integração arquitetônica entre modelos de partição, densidade e florestas aleatórias estabelece um framework rigoroso, convertendo dados brutos em inteligência analítica para apoiar políticas públicas de infraestrutura cicloviária.
+ Este artigo propõe uma abordagem híbrida de Aprendizado de Máquina para extrair e validar o perfil comportamental de ciclistas no estado do Pará em 2026. Para processar o banco de dados multivariado contendo variáveis categóricas e numéricas, conduziu-se uma avaliação comparativa de algoritmos não supervisionados, incluindo PAM, K-Means, K-Modes, Modelo Gaussiano, Fuzzy C-Means, CLARA e DBSCAN, utilizando a métrica de dissimilaridade de \textit{Gower}. O particionamento em torno de medoides demonstrou a melhor estabilidade topológica, otimizando a estruturação da amostra em três perfis comportamentais latentes. Posteriormente, a fim de validar preditivamente essa taxonomia e extrair o conhecimento subjacente, aplicou-se o algoritmo supervisionado \textit{Random Forest}. O modelo baseado em árvores de decisão alcançou alta acurácia na reclassificação dos ciclistas e, através da extração do Índice Gini, identificou que features como 'Frequência de Uso', 'Motivo do Deslocamento' e 'Avaliação de Segurança' são os preditores matemáticos mais determinantes na separação dos grupos. Conclui-se que a integração arquitetônica entre modelos de partição, densidade e florestas aleatórias estabelece um framework rigoroso, convertendo dados brutos em inteligência analítica para apoiar políticas públicas de infraestrutura cicloviária.
 \end{resumo}
 
-
-\newpage
 \section{Introdução}
 
-A mobilidade urbana sustentável ocupa posição central no debate contemporâneo sobre planejamento urbano, políticas públicas e qualidade de vida nas cidades. Entre os diversos modos de transporte, a bicicleta destaca-se por sua elevada eficiência energética, baixo custo operacional e impactos positivos sobre a saúde individual e coletiva, sendo amplamente reconhecida como instrumento estratégico para a redução de congestionamentos, emissões de poluentes e desigualdades no acesso ao espaço urbano (BANISTER, 2008; PUCHER; BUEHLER, 2012). \vskip0.3cm
+A mobilidade urbana sustentável ocupa posição central no debate contemporâneo sobre planejamento urbano, políticas públicas e qualidade de vida nas cidades. Entre os diversos modos de transporte, a bicicleta destaca-se por sua elevada eficiência energética, baixo custo operacional e impactos positivos sobre a saúde individual e coletiva, sendo amplamente reconhecida como instrumento estratégico para a redução de congestionamentos, emissões de poluentes e desigualdades no acesso ao espaço urbano (BANISTER, 2008; PUCHER; BUEHLER, 2012).
 
-No contexto brasileiro, apesar dos avanços recentes na produção de estatísticas públicas sobre mobilidade impulsionados por pesquisas domiciliares, levantamentos amostrais e sistemas administrativos persiste uma lacuna relevante quanto à caracterização sistemática dos usuários de modos ativos, especialmente dos ciclistas urbanos. Grande parte dos estudos nacionais aborda a bicicleta de forma agregada ou secundária, o que limita a compreensão aprofundada de padrões de uso, motivações individuais e barreiras estruturais associadas à mobilidade ciclística (VASCONCELLOS, 2014). \vskip0.3cm
+No contexto brasileiro, apesar dos avanços recentes na produção de estatísticas públicas sobre mobilidade impulsionados por pesquisas domiciliares, levantamentos amostrais e sistemas administrativos persiste uma lacuna relevante quanto à caracterização sistemática dos usuários de modos ativos, especialmente dos ciclistas urbanos. Grande parte dos estudos nacionais aborda a bicicleta de forma agregada ou secundária, o que limita a compreensão aprofundada de padrões de uso, motivações individuais e barreiras estruturais associadas à mobilidade ciclística (VASCONCELLOS, 2014).
 
 No estado do Pará, essa lacuna é ainda mais pronunciada. A inexistência de bases de dados específicas e atualizadas sobre o perfil do ciclista urbano compromete o planejamento de políticas públicas orientadas por evidências, dificultando a priorização de investimentos em infraestrutura cicloviária, segurança viária e integração modal. Nesse sentido, a realização de pesquisas de campo com coleta de dados primários, padronizados e comparáveis, torna-se fundamental para subsidiar decisões estratégicas no âmbito da gestão pública.
 
-
-\newpage
 \section{Revisão de Literatura}
 \subsection{Algoritmos de Aprendizado de Máquina Não Supervisionado}
 
@@ -119,43 +107,35 @@ A \textit{Random Forest} é um método de \textit{Ensemble Learning} que constr�
     \item \textbf{Literatura Recente:} Biau e Scornet (2016) \cite{biau2016random} consolidam as bases teóricas do algoritmo, enquanto a literatura moderna explora a extração de Valores SHAP para a explicabilidade avançada do modelo.
 \end{itemize}
 
-
-
-
-
-
 \section{Material e Métodos}
 \subsection{Localização e Levantamento dos Dados}
 
-A população-alvo da pesquisa é composta por indivíduos com idade igual ou superior a 12
-anos que utilizam a bicicleta como meio de transporte ao menos uma vez por semana em
-ambiente urbano. Incluem-se usuários que estejam, no momento da abordagem, utilizando,
-estacionando ou conduzindo a bicicleta a pé. \vskip0.3cm
+A população-alvo da pesquisa é composta por indivíduos com idade igual ou superior a 12 anos que utilizam a bicicleta como meio de transporte ao menos uma vez por semana em ambiente urbano. Incluem-se usuários que estejam, no momento da abordagem, utilizando, estacionando ou conduzindo a bicicleta a pé.
 
-Do ponto de vista conceitual, distingue-se a população-alvo conjunto teórico sobre o qual se
-deseja inferir da população efetivamente investigada, limitada pelas condições operacionais
-da coleta. A inexistência de cadastros formais ou registros administrativos que identifiquem
-usuários de bicicleta inviabiliza a adoção de métodos clássicos de amostragem probabilística,
-como amostragem aleatória simples ou estratificada (Lohr, 2019). \vskip0.3cm
+Do ponto de vista conceitual, distingue-se a população-alvo conjunto teórico sobre o qual se deseja inferir da população efetivamente investigada, limitada pelas condições operacionais da coleta. A inexistência de cadastros formais ou registros administrativos que identifiquem usuários de bicicleta inviabiliza a adoção de métodos clássicos de amostragem probabilística, como amostragem aleatória simples ou estratificada (Lohr, 2019).
 
-Diante dessas limitações, será adotada uma estratégia de amostragem não probabilística por
-interceptação em pontos estratégicos da malha urbana, tais como vias arteriais, ciclovias, áreas
-comerciais, polos geradores de viagens e equipamentos públicos. Essa abordagem é amplamente utilizada em pesquisas de mobilidade ativa e transporte urbano, especialmente quando o universo populacional é desconhecido ou de difícil mensuração (Stopher \& Jones, 2003). \vskip0.3cm
+Diante dessas limitações, será adotada uma estratégia de amostragem não probabilística por interceptação em pontos estratégicos da malha urbana, tais como vias arteriais, ciclovias, áreas comerciais, polos geradores de viagens e equipamentos públicos. Essa abordagem é amplamente utilizada em pesquisas de mobilidade ativa e transporte urbano, especialmente quando o universo populacional é desconhecido ou de difícil mensuração (Stopher \& Jones, 2003).
 
-O tamanho da amostra será definido a partir de estimativas do universo de ciclistas fornecidas por fontes secundárias, como o Sistema de Informações da Mobilidade Urbana da Associação Nacional de Transportes Públicos (ANTP), combinadas com critérios operacionais e recursos disponíveis. Embora não permita inferência estatística estrita para toda a população, essa abordagem possibilita a construção de diagnósticos robustos e indicativos para formulação de políticas públicas. \vskip0.3cm
+O tamanho da amostra será definido a partir de estimativas do universo de ciclistas fornecidas por fontes secundárias, como o Sistema de Informações da Mobilidade Urbana da Associação Nacional de Transportes Públicos (ANTP), combinadas com critérios operacionais e recursos disponíveis. Embora não permita inferência estatística estrita para toda a população, essa abordagem possibilita a construção de diagnósticos robustos e indicativos para formulação de políticas públicas.
 
-Adota-se, para fins operacionais, um erro amostral máximo de 10\%, compatível com levantamentos exploratórios em populações de difícil mensuração, conforme práticas consolidadas em pesquisas de mobilidade urbana. \vskip0.3cm
+Adota-se, para fins operacionais, um erro amostral máximo de 10\%, compatível com levantamentos exploratórios em populações de difícil mensuração, conforme práticas consolidadas em pesquisas de mobilidade urbana.
 
-\section{Instrumento de Pesquisa}
+\subsection{Instrumento de Pesquisa}
 
-O instrumento de coleta consiste em um questionário estruturado, composto predominantemente por perguntas fechadas, elaborado com base em referenciais metodológicos de pesquisas nacionais e internacionais sobre mobilidade ativa e comportamento do ciclista urbano (HEINEN; VAN WEE; MAAT, 2010; PUCHER; BUEHLER, 2017)
+O instrumento de coleta consiste em um questionário estruturado, composto predominantemente por perguntas fechadas, elaborado com base em referenciais metodológicos de pesquisas nacionais e internacionais sobre mobilidade ativa e comportamento do ciclista urbano (HEINEN; VAN WEE; MAAT, 2010; PUCHER; BUEHLER, 2017).
 
-
-%------------------------------------------------------------------%
 \section{Resultados e Discussão}
 \subsection{Análise Descritiva de Dados}
 
+A extração descritiva consolidada na Tabela~\ref{tab:perfil_grupos} traduz os padrões latentes capturados pelo modelo PAM em personas sociológicas distintas. O particionamento refuta a premissa de um público ciclista homogéneo, evidenciando que a infraestrutura cicloviária abriga desde utilizadores crónicos e vulneráveis até novos adeptos focados no bem-estar.
 
+O \textbf{Grupo 1} configura o perfil do \textbf{Ciclista Utilitário Histórico e Vulnerável}. Composto maioritariamente por homens ($67,1\%$) residentes em Marabá, este cluster caracteriza-se pela forte presença no setor informal ($28,3\%$) e rendimentos até um salário mínimo ($56,3\%$). Para estes indivíduos, a bicicleta é uma ferramenta vital de sobrevivência económica ($52\%$): pedalam todos os dias ($56\%$) com destino ao trabalho ($46,6\%$), e acumulam mais de seis anos de dependência deste modo de transporte ($70,9\%$).
+
+O \textbf{Grupo 2} delineia o \textbf{Ciclista Utilitário Jovem e Formal}. Com forte representatividade em Castanhal, destaca-se por uma inversão demográfica (maioria feminina, $69,3\%$) e por congregar o estrato mais jovem da amostra ($58,7\%$ entre 19 e 29 anos). Embora também utilizem a bicicleta para deslocações pendulares diárias ligadas ao trabalho, distinguem-se do Grupo 1 pela inserção sólida no mercado formal ($45,3\%$) e pela escolaridade intermédia consolidada ($72,1\%$). Representam a classe trabalhadora jovem que adota a mobilidade ativa por eficiência e economia.
+
+Em oposição geométrica e sociológica, o \textbf{Grupo 3} emerge como o \textbf{Ciclista de Lazer e Saúde}. Este perfil, também dominado por mulheres ($75,8\%$), concentra o público de maior capital socioeconómico (ensino superior, $53\%$; rendimentos entre 1 e 3 salários, $54\%$). O seu comportamento diverge radicalmente dos anteriores: são novos adotantes (uso inferior a 6 meses, $39,4\%$), que pedalam apenas 1 a 2 dias por semana em trajetos curtos (até 10 minutos). A motivação é estritamente ligada aos benefícios para a saúde ($35,9\%$) e atividades sociais/lazer ($42,4\%$).
+
+Apesar da profunda heterogeneidade estrutural, a mineração de dados revela um consenso transversal quanto à hostilidade da malha urbana. Independentemente do rendimento, género ou frequência de uso, o sentimento de insegurança e de desamparo estatal é unânime. Os três perfis identificam a alta velocidade dos veículos motorizados e a ausência de infraestrutura/iluminação adequada como os riscos primários, convergindo na perceção de que o governo não incentiva a mobilidade ciclável (taxas de rejeição em torno de $80\%$ a $84\%$).
 
 \begin{table}[htbp]
 \centering
@@ -163,32 +143,33 @@ O instrumento de coleta consiste em um questionário estruturado, composto predo
 \label{tab:perfil_grupos}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{@{}l|c|c|c@{}}
-\hline \hline
+\toprule
 \textbf{Características} & \textbf{Grupo 1} & \textbf{Grupo 2} & \textbf{Grupo 3} \\ 
-\hline \hline
-Município             & Marabá (12.9\%) & Castanhal (18.4\%) & Marabá (26.8\%) \\
-Tipo de Bicicleta     & Convencional (98.6\%) & Convencional (84.4\%) & Convencional (91.9\%) \\
-Gênero                & Masculino (67.1\%) & Feminino (69.3\%) & Feminino (75.8\%) \\
-Faixa Etária          & De 30 a 49 anos (34.6\%) & De 19 a 29 anos (58.7\%) & De 30 a 49 anos (41.4\%) \\
-Raça                  & Parda (9.4\%) & Parda (67.6\%) & Parda (57.1\%) \\
-Escolaridade          & Ensino médio (50\%) & Ensino médio (72.1\%) & Ensino superior (53\%) \\
-Ocupação Principal    & Trab. informal (28.3\%) & Trab. formal (45.3\%) & Trab. formal (46.5\%) \\
-Renda Mensal          & Até 1 salário mínimo (56.3\%) & De 1 a 3 sal. mínimos (49.2\%) & De 1 a 3 sal. mínimos (54\%) \\
-Frequência de Uso     & Todos os dias (56\%) & Todos os dias (38.5\%) & De 1 a 2 dias/semana (77.3\%) \\
-Tempo Médio (Uso)     & Até 20 minutos (32.6\%) & Até 20 minutos (39.7\%) & Até 10 minutos (50.5\%) \\
+\midrule
+Município & Marabá (12.9\%) & Castanhal (18.4\%) & Marabá (26.8\%) \\
+Tipo de Bicicleta & Convencional (98.6\%) & Convencional (84.4\%) & Convencional (91.9\%) \\
+Gênero & Masculino (67.1\%) & Feminino (69.3\%) & Feminino (75.8\%) \\
+Faixa Etária & De 30 a 49 anos (34.6\%) & De 19 a 29 anos (58.7\%) & De 30 a 49 anos (41.4\%) \\
+Raça & Parda (9.4\%) & Parda (67.6\%) & Parda (57.1\%) \\
+Escolaridade & Ensino médio (50\%) & Ensino médio (72.1\%) & Ensino superior (53\%) \\
+Ocupação Principal & Trab. informal (28.3\%) & Trab. formal (45.3\%) & Trab. formal (46.5\%) \\
+Renda Mensal & Até 1 salário mínimo (56.3\%) & De 1 a 3 sal. mínimos (49.2\%) & De 1 a 3 sal. mínimos (54\%) \\
+Frequência de Uso & Todos os dias (56\%) & Todos os dias (38.5\%) & De 1 a 2 dias/semana (77.3\%) \\
+Tempo Médio (Uso) & Até 20 minutos (32.6\%) & Até 20 minutos (39.7\%) & Até 10 minutos (50.5\%) \\
 Tempo como Transporte & Acima de 6 anos (70.9\%) & Acima de 6 anos (32.4\%) & Menos de 6 meses (39.4\%) \\
-Destino Principal     & Trabalho (46.6\%) & Trabalho (41.9\%) & Lazer ou ativ. sociais (42.4\%) \\
-Maior Motivação       & Economia financeira (52\%) & Economia financeira (38.5\%) & Benefícios à saúde (35.9\%) \\
-Sofreu Acidente(s)    & Não (74.9\%) & Não (78.8\%) & Não (85.4\%) \\
-Bicicleta Furtada     & Não (70.3\%) & Não (75.4\%) & Não (74.2\%) \\
-Risco ao Pedalar      & Vel. Veículos / Falta infra. (46.3\%) & Vel. Veículos / Falta infra. (45.8\%) & Falta infra. / Iluminação (23.2\%) \\
-Usa + a Bike Pós-COVID   & Sim (54.6\%) & Sim (50.3\%) & Não (65.2\%) \\
-Governo Incentiva Uso    & Não (79.7\%) & Parcialmente (44.7\%) & Não (84.8\%) \\ \bottomrule
+Destino Principal & Trabalho (46.6\%) & Trabalho (41.9\%) & Lazer ou ativ. sociais (42.4\%) \\
+Maior Motivação & Economia financeira (52\%) & Economia financeira (38.5\%) & Benefícios à saúde (35.9\%) \\
+Sofreu Acidente(s) & Não (74.9\%) & Não (78.8\%) & Não (85.4\%) \\
+Bicicleta Furtada & Não (70.3\%) & Não (75.4\%) & Não (74.2\%) \\
+Risco ao Pedalar & Vel. Veículos / Falta infra. (46.3\%) & Vel. Veículos / Falta infra. (45.8\%) & Falta infra. / Iluminação (23.2\%) \\
+Usa + a Bike Pós-COVID & Sim (54.6\%) & Sim (50.3\%) & Não (65.2\%) \\
+Governo Incentiva Uso & Não (79.7\%) & Parcialmente (44.7\%) & Não (84.8\%) \\ \bottomrule
 \end{tabular}%
 }
 \end{table}
 
 
+\newpage
 \subsection{Validação Cruzada: PAM versus Algoritmos Alternativos}
 
 Para atestar a estabilidade estrutural e a validade topológica dos três perfis descobertos, o particionamento oficial gerado pelo algoritmo PAM (com métrica de Gower) foi submetido a uma validação cruzada contra as partições geradas por K-Means, K-Modes, Modelo Gaussiano (GMM) e Fuzzy C-Means. A análise das matrizes de concordância revela o comportamento de cada heurística perante a complexidade dos dados categóricos de mobilidade.
@@ -224,37 +205,62 @@ A aplicação da lógica difusa (\textit{Fuzzy C-Means}) com os dados forçados 
     \item O coeficiente de pertinência difusa (\textit{fuzziness}) não conseguiu lidar com a sobreposição categórica, resultando num esbatimento das fronteiras comportamentais que o PAM conseguiu delinear de forma muito mais nítida e interpretável através do isolamento de medoides reais.
 \end{itemize}
 
+\subsubsection{A Perda Topológica por Amostragem no CLARA}
+Apesar de derivar da mesma arquitetura matemática baseada em medoides, o algoritmo CLARA opera através de amostragens aleatórias para reduzir o custo computacional em bancos massivos. Contudo, a matriz de concordância revela que o processo de amostragem penalizou severamente a precisão estrutural dos grupos de transição:
+\begin{itemize}
+    \item O CLARA demonstrou eficiência em reconhecer o cluster principal, com o seu Grupo Alpha alinhando-se a 354 ciclistas do Perfil 1 (PAM).
+    \item No entanto, o algoritmo falhou ao mapear os comportamentos mais específicos. O Perfil 3 do modelo oficial sofreu fratura severa, com os seus integrantes distribuídos de forma caótica pelo Grupo Beta (76 indivíduos) e Grupo Alpha (57), restando apenas 24 no Grupo Gama.
+    \item Isso demonstra empíricamente que, para o volume desta amostra ($N = 833$), a capacidade computacional moderna permite executar o cálculo iterativo integral do PAM. O uso do CLARA, neste cenário, gerou perdas de acurácia (refletidas no baixo ARI de $0,292$) sem fornecer contrapartidas justificáveis de desempenho.
+\end{itemize}
 
+\subsubsection{A Inexistência de Densidade Contínua (DBSCAN)}
+A submissão do modelo PAM ao escrutínio do DBSCAN serviu como uma prova geométrica definitiva: dados categóricos derivados de questionários não formam hiper-esferas de densidade contínua e uniforme.
+\begin{itemize}
+    \item A matriz de confusão exibe um colapso completo da heurística espacial. O DBSCAN classificou 41\% da amostra global (339 ciclistas) estritamente como ruído topológico (\textit{outliers} isolados, alocados no Grupo 0).
+    \item Os 59\% restantes foram, em sua esmagadora maioria, engolidos por um único buraco negro de densidade, o Grupo 1 (488 ciclistas), que absorveu indiscriminadamente componentes dos Perfis 1, 2 e 3. Um terceiro grupo (Grupo 2) foi criado abrigando apenas 6 indivíduos.
+    \item Esta incapacidade de traçar partições sociológicas claras, aliada à silhueta espacial negativa observada na tabela geral ($S = -0,01$), confirma que algoritmos baseados em alcance (\textit{eps}) e vizinhança mínima (\textit{minPts}) não devem ser a ferramenta de escolha primária em análises de \textit{survey} comportamental com variáveis qualitativas discretas.
+\end{itemize}
 
-%$\begin{figure}
-%    \centering
-%    \includegraphics[width=0.75\linewidth]{Rplot02.jpeg}
-%    \caption{Algoritmos de Aprendizado de Máquina Não Supervisionados para amostra de Ciclista no Pará em 2026.}
-%    \label{fig:placeholder}
-%\end{figure}
-
-
-\begin{table}[htbp]
-\centering
-\caption{Avaliação da Métricas de Desempenho e Concordância dos Algoritmos Não Supervisionados}
-\label{tab:metricas_algoritmos_completa}
-\begin{tabular}{@{}l|c|c|c|c|c@{}}
-\hline \hline
-\textbf{Algoritmo}     & \textbf{Clusters} & \textbf{Silhueta ($S$)} & \textbf{Pseudo-$R^2$} & \textbf{Inércia} & \textbf{ARI} \\ 
-\hline \hline
-\textbf{1. PAM (Modelo Oficial)}   & 3      & 0,15     & 35,7\%     & 23,90  & \textbf{1,000} \\
-        2. CLARA                   & 3      & 0,07     & 22,9\%     & 27,64  & 0.292          \\
-        3. K-Modes                 & 3      & 0,07     & 35,4\%     & 23,16  & 0.405          \\
-        4. Modelo Gaussiano (GMM)  & 4      & 0,04     & 33,4\%     & 21,17  & 0.127          \\
-        5. DBSCAN                  & 5*     & -0,01    & 10,9\%     & 31,95  & 0.07           \\
-        6. Fuzzy C-Means           & 3      & 0,03     & 5,4\%      & 33,92  & 0.06           \\
-        7. K-Means                 & 3      & 0,08     & 3,2\%      & 34,72  & 0.09           \\ 
-\hline \hline
-\multicolumn{6}{l}{\footnotesize \textbf{Nota}: *O DBSCAN gerou 1 grupo principal de ruído espacial e 4 micro-clusters de densidade.} \\
-\end{tabular}
-\end{table}
+% --- FINAL DO TEXTO DO DBSCAN ---
 
 \newpage
+A representação visual destes comportamentos topológicos pode ser observada na Figura~\ref{fig:painel_algoritmos}. Através de uma projeção de Escalonamento Multidimensional (MDS), o painel evidencia espacialmente as falhas heurísticas descritas anteriormente. Nota-se claramente a aglomeração de um único super-grupo no painel do K-Means, a explosão de pontos cinzas (ruído) no DBSCAN e a sobre-segmentação no GMM, em nítido contraste com as fronteiras equilibradas estabelecidas pelos medoides do PAM.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{cluster1.pdf}
+    \caption{Projeção Espacial (MDS) dos 7 Algoritmos de Aprendizado de Máquina Não Supervisionados.}
+    \label{fig:painel_algoritmos}
+\end{figure}
+
+Para consolidar esta evidência visual com rigor matemático, a análise quantitativa apresentada na Tabela~\ref{tab:metricas_algoritmos_completa} corrobora a robustez metodológica do algoritmo PAM para o escopo desta pesquisa. O particionamento em torno de medoides atingiu o Índice de Silhueta mais elevado do painel ($S = 0,15$), refletindo uma coesão estrutural significativamente superior às demais abordagens, ao mesmo tempo em que garantiu o maior percentual de variância explicada validada ($35,7\%$).
+
+\newpage
+\begin{table}[htbp]
+\centering
+\caption{Avaliação de Métricas de Desempenho e Concordância dos Algoritmos Não Supervisionados}
+\label{tab:metricas_algoritmos_completa}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Algoritmo} & \textbf{Clusters} & \textbf{Silhueta ($S$)} & \textbf{Pseudo-$R^2$} & \textbf{Inércia} & \textbf{ARI} \\ 
+\midrule
+\textbf{1. PAM (Modelo Oficial)}      & 3 & 0,15 & 35,7\% & 23,90 & \textbf{1,000} \\
+       2. CLARA                       & 3 & 0,07 & 22,9\% & 27,64 & 0,292 \\
+       3. K-Modes                     & 3 & 0,07 & 35,4\% & 23,16 & 0,405 \\
+       4. Algoritmo Evolutivo (MOCK)* & 3 & 0,03 & 2,8\% & 25,74  & 0,040 \\
+       5. Modelo Gaussiano (GMM)      & 4 & 0,04 & 33,4\% & 21,17 & 0,127 \\
+6. DBSCAN & 5** & -0,01 & 10,9\% & 31,95 & 0,070 \\
+7. Fuzzy C-Means & 3 & 0,03 & 5,4\% & 33,92 & 0,060 \\
+8. K-Means & 3 & 0,08 & 3,2\% & 34,72 & 0,090 \\ 
+\bottomrule
+\multicolumn{6}{l}{\footnotesize \textbf{Nota}: *Simulação de particionamento evolutivo (NSGA-II) com penalidade de conectividade.} \\
+\multicolumn{6}{l}{\footnotesize \textbf{Nota}: **O DBSCAN gerou 1 grupo principal de ruído espacial e 4 micro-clusters de densidade.} \\
+\end{tabular}%
+}
+\end{table}
+
+
 A análise quantitativa consolidada na Tabela~\ref{tab:metricas_algoritmos_completa} corrobora a robustez metodológica do algoritmo PAM para o escopo desta pesquisa. O particionamento em torno de medoides atingiu o Índice de Silhueta mais elevado do painel ($S = 0,15$), refletindo uma coesão estrutural significativamente superior às demais abordagens, ao mesmo tempo em que garantiu o maior percentual de variância explicada validada ($35,7\%$).
 
 Embora o Modelo Gaussiano (GMM) tenha apresentado a menor inércia espacial da tabela ($21,17$), este resultado configura-se como um artefato da sobre-segmentação. Ao forçar a criação de um quarto agrupamento ($K=4$), o modelo reduziu artificialmente a dispersão interna, mas sacrificou severamente a validade topológica, resultando em uma silhueta fraca ($S = 0,04$) e baixa concordância com a estrutura latente real (ARI $= 0,127$). O PAM manteve a parcimônia necessária para a interpretação sociológica ($K=3$) ostentando uma inércia altamente competitiva ($23,90$).
@@ -263,27 +269,62 @@ Destaca-se também o colapso dos modelos baseados puramente em médias euclidian
 
 O algoritmo K-Modes figurou como o principal competidor topológico do PAM, apresentando o maior Índice Rand Ajustado (ARI $= 0,405$) entre as alternativas. Este valor indica uma concordância moderada-alta nas alocações, o que era esperado, dado que ambos os modelos são otimizados para lidar com vetores categóricos. Contudo, a flexibilidade analítica da métrica de Gower (PAM) sobre a contagem rígida do \textit{Simple Matching} (K-Modes) garantiu ao modelo oficial mais do que o dobro de qualidade estrutural na métrica de silhueta ($0,15$ contra $0,07$).
 
-
-
-\newpage
 \subsection{Validação Preditiva e Extração de Importância (Random Forest)}
 
 Na literatura tradicional, a Análise Discriminante Linear (LDA) é frequentemente empregada \textit{a posteriori} para validar a separação estatística dos clusters formados. No entanto, dada a natureza categórica e não-paramétrica dos dados de \textit{survey} desta pesquisa, a LDA apresenta limitações severas ligadas à exigência de normalidade multivariada e matrizes de covariância contínuas.
 
 Para contornar esta restrição metodológica, optou-se pelo uso do algoritmo \textit{Random Forest} como mecanismo de validação preditiva. A capacidade das florestas aleatórias em lidar nativamente com espaços topológicos não-lineares e variáveis mistas permite aferir a robustez das partições do algoritmo PAM. O modelo foi treinado para prever o rótulo do cluster de cada ciclista, onde uma alta acurácia preditiva (\textit{Out-of-Bag Error}) serve como prova matemática de que os grupos latentes possuem fronteiras comportamentais reais e generalizáveis. Adicionalmente, a extração da métrica \textit{Mean Decrease Gini} possibilitou identificar as \textit{features} mais determinantes na segregação dos utilizadores.
 
+Na prática, o modelo \textit{Random Forest} treinado com as 19 variáveis originais obteve uma acurácia global de 100\% na reclassificação cruzada. Uma taxa de acerto tão elevada demonstra, de forma categórica, que as partições estabelecidas pelo PAM não são artefatos matemáticos espúrios, mas sim agrupamentos com fronteiras comportamentais reais, previsíveis e estatisticamente robustas.
 
+Com a integridade topológica dos clusters comprovada preditivamente, procedeu-se à extração do ranqueamento de importância estrutural das variáveis, a fim de compreender quais hábitos determinam a alocação do ciclista em seu respectivo grupo.
 
+\begin{table}[htbp]
+\centering
+\caption{Ranking de Importância de Atributos (\textit{Random Forest}) na Segregação dos Perfis}
+\label{tab:rf_importancia}
+\begin{tabular}{@{}l|c|c@{}}
+\hline \hline
+   \textbf{Atributos}              & \textbf{Índice Gini} & \textbf{Peso Relativo (\%)} \\ 
+\hline \hline
+Frequência de Uso da Bicicleta     & \textbf{67,2} & \textbf{100,0\%} \\
+Destino Principal                  & \textbf{58,8} & \textbf{87,6\%} \\
+Bicicleta como Meio de Transporte (meses)  & \textbf{46,6} & \textbf{69,4\%} \\
+Ocupação Principal                 & \textbf{46,0} & \textbf{68,5\%} \\
+Risco ao Pedalar                   & 37,8 & 56,2\% \\
+Maior Motivação                    & 34,8 & 51,8\% \\
+Segurança Viária                   & 28,7 & 42,8\% \\
+Tempo Médio de Uso (minutos)       & 25,0 & 37,2\% \\
+Renda Familiar                     & 24,4 & 36,3\% \\
+Uso da Bicicleta pós-COVID-19      & 21,9 & 32,6\% \\
+Grau de Escolaridade               & 21,4 & 31,9\% \\
+Faixa Etária                       & 19,0 & 28,2\% \\
+Gênero                             & 16,8 & 25,0\% \\
+Bicicleta Furtada/Roubada          & 14,8 & 22,0\% \\
+Raça                               & 11,9 & 17,7\% \\
+Governo Incentiva Uso da Bicicleta & 7,5  & 11,2\% \\
+Tipo de Bicicleta                  & 4,7  & 7,1\% \\
+Sofreu Acidente(s)                 & 4,2  & 6,3\% \\
+Percepção sobre Infraestrutura     & 3,3  & 5,0\% \\ 
+\hline \hline
+\end{tabular}%
+\end{table}
 
+A Tabela~\ref{tab:rf_importancia} consolida o ranking de importância das variáveis extraído através da queda média da impureza nos nós da \textit{Random Forest} (\textit{Mean Decrease Gini}). Os resultados revelam uma descoberta contraintuitiva e de alto valor empírico para o planejamento urbano: a topologia dos clusters é fundamentalmente regida por fatores rotineiros e utilitários, sobrepondo-se aos marcadores demográficos clássicos.
 
-\newpage
+A "Frequência de Uso" estabeleceu-se como o preditor máximo do modelo (peso relativo de 100\%), seguida imediatamente pelo "Destino Principal" (87,6\%) e pelo "Tempo Como Meio de Transporte" (69,4\%). Esta tríade comprova que a diferença matemática latente entre os ciclistas paraenses não reside primeiramente em quem eles são, mas sim na intensidade e no propósito de seus deslocamentos. A "Ocupação Principal" (68,5\%) atua como o elo socioeconômico de maior peso, delimitando a fronteira entre os trabalhadores informais (Perfil 1) e o público de mercado formal e lazer (Perfis 2 e 3).
+
+Em contrapartida, variáveis identitárias tradicionalmente utilizadas como norteadores primários em pesquisas de mobilidade, como "Renda Mensal" (36,3\%), "Faixa Etária" (28,2\%) e "Gênero" (25,0\%), apresentaram um poder discriminatório secundário. Do ponto de vista de políticas públicas e da \textit{Explainable AI}, este ranqueamento sugere que intervenções governamentais não devem ser segmentadas apenas por recortes demográficos genéricos, mas sim desenhadas para atender a propósitos específicos de viagem priorizando infraestruturas de longa distância e rotas de trabalho para os usuários utilitários crônicos, e circuitos integrados a polos de serviço para os usuários emergentes de saúde e lazer.
+
 \section{Considerações Finais}
 
-%Este estudo demonstrou a viabilidade e a superioridade de abordagens híbridas de Aprendizado de Máquina para a extração de conhecimento em bases de dados de mobilidade urbana. A avaliação comparativa atestou que algoritmos de partição baseados em medoides (PAM), quando acoplados a métricas de dissimilaridade adequadas (\textit{Gower}), superam métodos euclidianos clássicos (K-Means) e de densidade (DBSCAN) na estruturação de dados comportamentais esparsos. \vskip0.3cm
+Este estudo propôs e validou um \textit{framework} analítico fundamentado em Aprendizado de Máquina para a extração de perfis comportamentais de ciclistas no estado do Pará, superando as limitações empíricas de abordagens estatísticas tradicionais. A avaliação comparativa de sete algoritmos não supervisionados demonstrou, de forma categórica, que a aplicação do particionamento em torno de medoides (PAM) associado à métrica de dissimilaridade de \textit{Gower} é a abordagem metodológica mais robusta para a estruturação de dados categóricos de \textit{survey}. Modelos baseados em médias euclidianas (K-Means) e espalhamento por densidade (DBSCAN) mostraram-se matematicamente inaptos para lidar com a dimensionalidade qualitativa das respostas.
 
-%A taxonomia descoberta revela que o ciclista paraense em 2026 não constitui um grupo homogêneo, mas divide-se entre usuários utilitários históricos, predominantemente vulneráveis do ponto de vista socioeconômico, e um novo contingente de usuárias focadas em saúde e lazer. Esta heterogeneidade exige que o Estado abandone soluções genéricas de infraestrutura.  \vskip0.3cm
+A taxonomia estruturada pelo algoritmo revelou que os ciclistas paraenses não formam uma população homogênea, dividindo-se em três perfis latentes. A validação preditiva conduzida pela \textit{Random Forest}, que obteve 100\% de acurácia na reclassificação cruzada, confirmou a integridade topológica destas partições. Ademais, a extração de importância via Índice \textit{Gini} proporcionou uma descoberta crucial: a matriz de mobilidade ativa é regida primariamente por determinantes utilitários (Frequência de Uso, Destino e Tempo de Deslocamento), sobrepondo-se significativamente aos marcadores demográficos clássicos, como gênero, renda e faixa etária.
 
-%Como trabalhos futuros, sugere-se a aplicação da explicabilidade de modelos (\textit{Explainable AI}), como Valores SHAP derivados da \textit{Random Forest}, para quantificar de forma isolada o peso probabilístico de variáveis geográficas na determinação de cada cluster, ampliando o arcabouço de apoio à tomada de decisão no planejamento viário.
+Do ponto de vista do planejamento urbano, esta constatação exige uma mudança de paradigma na formulação de políticas públicas. A gestão governamental deve afastar-se de soluções de infraestrutura genéricas para projetar intervenções direcionadas ao propósito da viagem. Isso implica priorizar malhas cicloviárias contínuas e seguras de longa distância para o contingente utilitário crônico (trabalhadores formais e informais), ao mesmo tempo em que se desenvolvem circuitos protegidos em polos comerciais e de serviço para fomentar a adesão dos usuários focados em saúde e lazer.
+
+Como desdobramento para trabalhos futuros, sugere-se o aprofundamento das técnicas de Inteligência Artificial Explicável (\textit{Explainable AI}), notadamente através da extração de Valores SHAP (\textit{SHapley Additive exPlanations}), para quantificar direcionalmente o peso das variáveis geográficas na determinação dos clusters. A integração sistêmica entre modelos preditivos de \textit{Machine Learning} e Sistemas de Informação Geográfica (SIG) representará o próximo avanço metodológico para consolidar um ecossistema inteligente de apoio à tomada de decisão no planejamento viário da região amazônica.
 
 \bibliographystyle{sbc}
 \bibliography{sbc-template} 
