@@ -17,7 +17,7 @@
 \maketitle
 
 \begin{resumo} 
- Este artigo propõe uma abordagem híbrida de Aprendizado de Máquina para extrair e validar o perfil comportamental de ciclistas no estado do Pará em 2026. Para processar o banco de dados multivariado contendo variáveis categóricas e numéricas, conduziu-se uma avaliação comparativa de algoritmos não supervisionados, incluindo PAM, K-Means, K-Modes, Modelo Gaussiano, Fuzzy C-Means, CLARA e DBSCAN, utilizando a métrica de dissimilaridade de \textit{Gower}. O particionamento em torno de medoides demonstrou a melhor estabilidade topológica, otimizando a estruturação da amostra em três perfis comportamentais latentes. Posteriormente, a fim de validar preditivamente essa taxonomia e extrair o conhecimento subjacente, aplicou-se o algoritmo supervisionado \textit{Random Forest}. O modelo baseado em árvores de decisão alcançou alta acurácia na reclassificação dos ciclistas e, através da extração do Índice Gini, identificou que features como 'Frequência de Uso', 'Motivo do Deslocamento' e 'Avaliação de Segurança' são os preditores matemáticos mais determinantes na separação dos grupos. Conclui-se que a integração arquitetônica entre modelos de partição, densidade e florestas aleatórias estabelece um framework rigoroso, convertendo dados brutos em inteligência analítica para apoiar políticas públicas de infraestrutura cicloviária.
+ Este artigo propõe uma abordagem híbrida de Aprendizado de Máquina para extrair e validar o perfil comportamental de ciclistas no estado do Pará em 2026. Para processar o banco de dados multivariado contendo variáveis categóricas e numéricas, conduziu-se uma avaliação comparativa de dez algoritmos não supervisionados, incluindo PAM, AGNES, CLARA, K-Modes, Fuzzy K-Modes, Fuzzy C-Means, MOCK, Modelo Gaussiano, DBSCAN e K-Means, utilizando a métrica de dissimilaridade de \textit{Gower}. O particionamento em torno de medoides (PAM) demonstrou a melhor estabilidade topológica, otimizando a estruturação da amostra em três perfis comportamentais latentes. Posteriormente, a fim de validar preditivamente essa taxonomia e extrair o conhecimento subjacente, aplicou-se o algoritmo supervisionado \textit{Random Forest}. O modelo baseado em árvores de decisão alcançou alta acurácia na reclassificação dos ciclistas e, através da extração do Índice Gini, identificou que features como 'Frequência de Uso', 'Motivo do Deslocamento' e 'Avaliação de Segurança' são os preditores matemáticos mais determinantes na separação dos grupos. Conclui-se que a integração arquitetônica entre modelos de partição, densidade e florestas aleatórias estabelece um framework rigoroso, convertendo dados brutos em inteligência analítica para apoiar políticas públicas de infraestrutura cicloviária.
 \end{resumo}
 
 \section{Introdução}
@@ -44,7 +44,7 @@ O K-Means é um método de partição que busca dividir $N$ observações em $K$
 \end{itemize}
 
 \subsubsection{Algoritmo K-Modes}
-Uma extensão do K-Means desenvolvida especificamente para lidar com dados categóricos. Em vez de calcular a média euclidiana, o algoritmo utiliza a moda estadística, substituindo o centroide pelo "modo" do grupo \cite{huang1998extensions}.
+Uma extensão do K-Means desenvolvida especificamente para lidar com dados categóricos. Em vez de calcular a média euclidiana, o algoritmo utiliza a moda estatística, substituindo o centróide pelo "moda" do grupo \cite{huang1998extensions}.
 \begin{itemize}
     \item \textbf{Função Objetivo (Erro):} Minimiza o custo total baseado em incompatibilidades, expresso por:
     $$ J = \sum_{j=1}^{K} \sum_{x_i \in C_j} d_{mm}(x_i, Q_j) $$
@@ -142,7 +142,7 @@ Apesar da profunda heterogeneidade estrutural, a mineração de dados revela um 
 \caption{Perfil Estatístico e Comportamental dos Ciclistas Paraenses por Grupo (2026)}
 \label{tab:perfil_grupos}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}l|c|c|c@{}}
+\begin{tabular}{@{}lccc@{}}
 \toprule
 \textbf{Características} & \textbf{Grupo 1} & \textbf{Grupo 2} & \textbf{Grupo 3} \\ 
 \midrule
@@ -163,111 +163,117 @@ Sofreu Acidente(s) & Não (74.9\%) & Não (78.8\%) & Não (85.4\%) \\
 Bicicleta Furtada & Não (70.3\%) & Não (75.4\%) & Não (74.2\%) \\
 Risco ao Pedalar & Vel. Veículos / Falta infra. (46.3\%) & Vel. Veículos / Falta infra. (45.8\%) & Falta infra. / Iluminação (23.2\%) \\
 Usa + a Bike Pós-COVID & Sim (54.6\%) & Sim (50.3\%) & Não (65.2\%) \\
-Governo Incentiva Uso & Não (79.7\%) & Parcialmente (44.7\%) & Não (84.8\%) \\ \bottomrule
+Governo Incentiva Uso & Não (79.7\%) & Parcialmente (44.7\%) & Não (84.8\%) \\ 
+\bottomrule
 \end{tabular}%
 }
 \end{table}
 
-
-\newpage
 \subsection{Validação Cruzada: PAM versus Algoritmos Alternativos}
 
-Para atestar a estabilidade estrutural e a validade topológica dos três perfis descobertos, o particionamento oficial gerado pelo algoritmo PAM (com métrica de Gower) foi submetido a uma validação cruzada contra as partições geradas por K-Means, K-Modes, Modelo Gaussiano (GMM) e Fuzzy C-Means. A análise das matrizes de concordância revela o comportamento de cada heurística perante a complexidade dos dados categóricos de mobilidade.
+Para atestar a estabilidade estrutural e a validade topológica dos três perfis descobertos, o particionamento oficial gerado pelo algoritmo PAM (com métrica de Gower) foi submetido a uma validação cruzada contra partições alternativas. A análise quantitativa revela o comportamento de cada heurística perante a complexidade dos dados categóricos de mobilidade.
 
 \subsubsection{O Colapso do K-Means em Dados Categóricos}
-A comparação entre PAM e K-Means evidenciou a inadequação de métricas euclidianas clássicas para dados sociocomportamentais. O algoritmo K-Means sofreu um colapso de variância, alocando 77\% de toda a amostra (557 dos 727 ciclistas) num único super-grupo espúrio, denominado Grupo Y. 
+A comparação entre PAM e K-Means evidenciou a inadequação de métricas euclidianas clássicas para dados sociocomportamentais. O algoritmo K-Means sofreu um colapso de variância, alocando 77\% de toda a amostra (557 dos 727 ciclistas) num único super-grupo espúrio. 
 \begin{itemize}
-    \item Este super-grupo absorveu quase a totalidade dos três perfis do PAM (274 do Perfil 1, 133 do Perfil 2 e 150 do Perfil 3).
+    \item Este super-grupo absorveu quase a totalidade dos três perfis do PAM.
     \item A incapacidade do K-Means em calcular médias aritméticas válidas para respostas qualitativas resultou numa severa aglomeração (\textit{crowding problem}), impossibilitando a extração de qualquer padrão comportamental acionável para políticas públicas.
 \end{itemize}
 
 \subsubsection{Convergência Parcial com o K-Modes}
-Ao contrário do K-Means, o K-Modes (desenhado para dados categóricos) demonstrou forte concordância topológica com os perfis extremos do PAM, validando a sua existência:
+Ao contrário do K-Means, o K-Modes demonstrou forte concordância topológica com os perfis extremos do PAM, validando a sua existência:
 \begin{itemize}
     \item \textbf{Alinhamento do Perfil Principal:} O Perfil 1 do PAM obteve forte correspondência com o Perfil A do K-Modes, partilhando 205 ciclistas (28\% da amostra global).
     \item \textbf{Alinhamento do Perfil Específico:} O Perfil 3 do PAM alinhou-se de forma substancial com o Perfil B do K-Modes (164 ciclistas partilhados).
-    \item \textbf{Divergência no Perfil Intermédio:} O Perfil 2 apresentou alta fragmentação, distribuindo-se de forma quase equitativa entre os três grupos do K-Modes. Isto sugere que o K-Modes, ao basear-se apenas na moda estatística (\textit{Simple Matching}), perde sensibilidade analítica nos grupos de transição, onde a métrica de Gower (utilizada pelo PAM) é mais eficaz ao ponderar semelhanças parciais.
+    \item \textbf{Divergência no Perfil Intermédio:} O Perfil 2 apresentou alta fragmentação, distribuindo-se de forma quase equitativa entre os três grupos do K-Modes. Isto sugere que o K-Modes, ao basear-se apenas na moda estatística (\textit{Simple Matching}), perde sensibilidade analítica nos grupos de transição, onde a métrica de Gower (PAM) é mais eficaz ao ponderar semelhanças parciais.
 \end{itemize}
 
 \subsubsection{A Sobre-segmentação do Modelo Gaussiano (GMM)}
-O modelo probabilístico Gaussiano (GMM) utilizou o Critério de Informação Bayesiano (BIC) para definir o número ideal de agrupamentos, convergindo autonomamente para $K=4$. A introdução deste quarto grupo revela uma tentativa do algoritmo de acomodar a variância esparsa dos dados:
+O modelo probabilístico Gaussiano (GMM) utilizou o Critério de Informação Bayesiano (BIC) para definir o número ideal de agrupamentos, convergindo autonomamente para $K=5$. A introdução destes grupos adicionais revela uma tentativa do algoritmo de acomodar a variância esparsa dos dados:
 \begin{itemize}
-    \item O Perfil 1 (PAM) encontrou o seu núcleo no Grupo 2 do GMM (209 ciclistas).
-    \item O Perfil 3 (PAM) consolidou-se solidamente no Grupo 3 do GMM (153 ciclistas).
-    \item A fragmentação severa ocorreu novamente no Perfil 2, que se diluiu por todos os quatro clusters gaussianos. A criação do Grupo 4 (GMM), com 82 ciclistas, capta micro-comportamentos que o PAM optou por aglutinar para manter a parcimónia analítica. No contexto de planeamento urbano, um modelo mais limpo ($K=3$) é preferível a um modelo sobre-segmentado.
+    \item O Perfil 1 (PAM) encontrou o seu núcleo no Grupo 2 do GMM (199 ciclistas) e no Grupo 4 (102 ciclistas).
+    \item O Perfil 3 (PAM) consolidou-se no Grupo 3 do GMM (76 ciclistas).
+    \item A fragmentação severa ocorreu novamente no Perfil 2, que se diluiu por todos os cinco clusters gaussianos. A criação de micro-grupos adicionais capta micro-comportamentos que o PAM optou por aglutinar para manter a parcimónia analítica.
 \end{itemize}
 
 \subsubsection{A Diluição das Fronteiras no Fuzzy C-Means}
 A aplicação da lógica difusa (\textit{Fuzzy C-Means}) com os dados forçados a um formato numérico replicou parcialmente a falha do K-Means, embora com menor agressividade.
 \begin{itemize}
-    \item Ocorreu uma forte polarização binária: o Grupo Beta absorveu 43\% da amostra (316 ciclistas) e o Grupo Gama absorveu 38\% (275 ciclistas), deixando o Grupo Alpha esvaziado (19\%).
-    \item O Perfil 1 do PAM foi drasticamente fraturado entre o Grupo Beta (181) e o Grupo Gama (104).
-    \item O coeficiente de pertinência difusa (\textit{fuzziness}) não conseguiu lidar com a sobreposição categórica, resultando num esbatimento das fronteiras comportamentais que o PAM conseguiu delinear de forma muito mais nítida e interpretável através do isolamento de medoides reais.
+    \item Ocorreu uma forte polarização binária: o Grupo Beta absorveu 43\% da amostra e o Grupo Gama absorveu 38\%, deixando o Grupo Alpha esvaziado (19\%).
+    \item O coeficiente de pertinência difusa (\textit{fuzziness}) não conseguiu lidar com a sobreposição categórica, resultando num esbatimento das fronteiras comportamentais que o PAM conseguiu delinear nitidamente através de medoides reais.
 \end{itemize}
 
 \subsubsection{A Perda Topológica por Amostragem no CLARA}
-Apesar de derivar da mesma arquitetura matemática baseada em medoides, o algoritmo CLARA opera através de amostragens aleatórias para reduzir o custo computacional em bancos massivos. Contudo, a matriz de concordância revela que o processo de amostragem penalizou severamente a precisão estrutural dos grupos de transição:
+Apesar de derivar da mesma arquitetura matemática baseada em medoides, o algoritmo CLARA opera através de amostragens aleatórias. A matriz de concordância revela que o processo de amostragem penalizou severamente a precisão estrutural dos grupos de transição:
 \begin{itemize}
-    \item O CLARA demonstrou eficiência em reconhecer o cluster principal, com o seu Grupo Alpha alinhando-se a 354 ciclistas do Perfil 1 (PAM).
-    \item No entanto, o algoritmo falhou ao mapear os comportamentos mais específicos. O Perfil 3 do modelo oficial sofreu fratura severa, com os seus integrantes distribuídos de forma caótica pelo Grupo Beta (76 indivíduos) e Grupo Alpha (57), restando apenas 24 no Grupo Gama.
-    \item Isso demonstra empíricamente que, para o volume desta amostra ($N = 833$), a capacidade computacional moderna permite executar o cálculo iterativo integral do PAM. O uso do CLARA, neste cenário, gerou perdas de acurácia (refletidas no baixo ARI de $0,292$) sem fornecer contrapartidas justificáveis de desempenho.
+    \item O CLARA demonstrou eficiência em reconhecer o cluster principal, mas falhou ao mapear os comportamentos específicos (Perfil 3 sofreu fratura severa, com seus integrantes diluídos).
+    \item Isso demonstra empiricamente que, para o volume desta amostra ($N = 833$), a capacidade computacional moderna permite executar o cálculo iterativo integral do PAM. O uso do CLARA gerou perdas de acurácia sem fornecer contrapartidas justificáveis de desempenho.
 \end{itemize}
 
 \subsubsection{A Inexistência de Densidade Contínua (DBSCAN)}
-A submissão do modelo PAM ao escrutínio do DBSCAN serviu como uma prova geométrica definitiva: dados categóricos derivados de questionários não formam hiper-esferas de densidade contínua e uniforme.
+A submissão ao escrutínio do DBSCAN serviu como prova geométrica de que dados categóricos derivados de questionários não formam hiper-esferas de densidade contínua.
 \begin{itemize}
-    \item A matriz de confusão exibe um colapso completo da heurística espacial. O DBSCAN classificou 41\% da amostra global (339 ciclistas) estritamente como ruído topológico (\textit{outliers} isolados, alocados no Grupo 0).
-    \item Os 59\% restantes foram, em sua esmagadora maioria, engolidos por um único buraco negro de densidade, o Grupo 1 (488 ciclistas), que absorveu indiscriminadamente componentes dos Perfis 1, 2 e 3. Um terceiro grupo (Grupo 2) foi criado abrigando apenas 6 indivíduos.
-    \item Esta incapacidade de traçar partições sociológicas claras, aliada à silhueta espacial negativa observada na tabela geral ($S = -0,01$), confirma que algoritmos baseados em alcance (\textit{eps}) e vizinhança mínima (\textit{minPts}) não devem ser a ferramenta de escolha primária em análises de \textit{survey} comportamental com variáveis qualitativas discretas.
+    \item O DBSCAN classificou 41\% da amostra global estritamente como ruído topológico (\textit{outliers} isolados).
+    \item Os 59\% restantes foram engolidos por um único buraco negro de densidade. A incapacidade de traçar partições claras confirma que algoritmos baseados em alcance (\textit{eps}) não são ideais para \textit{survey} comportamental qualitativo.
 \end{itemize}
 
-% --- FINAL DO TEXTO DO DBSCAN ---
+\subsubsection{O Desbalanceamento Hierárquico do AGNES}
+A validação cruzada com o método hierárquico AGNES demonstra uma boa concordância na identificação do grupo majoritário, alocando $48\%$ dos ciclistas do Perfil 1 diretamente em seu Grupo Alpha. Contudo, a natureza aglomerativa do método Ward falhou na separação dos nichos menores, gerando um sub-agrupamento esvaziado (Grupo Gama com apenas $4,2\%$ da amostra). O AGNES acabou misturando a maior parte dos ciclistas do Perfil 3 ($12\%$) dentro do mesmo balde que o Perfil 2 ($19\%$), falhando em reconhecer a fronteira sutil que separa diferentes motivações de uso da bicicleta que o particionamento em torno de medoides (PAM) conseguiu isolar.
+
+\subsubsection{O Colapso de Fronteiras no Fuzzy K-Modes}
+A matriz de concordância do algoritmo Fuzzy K-Modes ilustra perfeitamente o efeito deletério da suavização de fronteiras em dados qualitativos. O modelo difuso colapsou a taxonomia, gerando um agrupamento praticamente vazio (Grupo Alpha com apenas $0,5\%$ da amostra). Ao invés de delimitar os perfis de forma isolada, o algoritmo fundiu o Perfil 2 e o Perfil 3 do PAM quase integralmente em seu Grupo Beta (absorvendo $26\%$ e $16\%$ da amostra global, respectivamente). Isso comprova que a pertinência fracionada em variáveis categóricas destrói a coesão dos nichos comportamentais.
+
+\subsubsection{A Perturbação Evolutiva do MOCK}
+A validação com o Algoritmo Evolutivo revela uma forte retenção da estrutura diagonal original. No entanto, as mutações genéticas geraram um "vazamento" constante de ciclistas para fora dos seus perfis ideais (aproximadamente $5\%$ a $7\%$ de erro de alocação por grupo). Este espalhamento artificial de vizinhança explica a queda abrupta na variância explicada (Pseudo-$R^2$) observada nas métricas gerais, confirmando que a heurística multiobjetivo não consegue estabilizar os agrupamentos quando aplicada a distâncias de Gower em inquéritos fechados.
 
 \newpage
 A representação visual destes comportamentos topológicos pode ser observada na Figura~\ref{fig:painel_algoritmos}. Através de uma projeção de Escalonamento Multidimensional (MDS), o painel evidencia espacialmente as falhas heurísticas descritas anteriormente. Nota-se claramente a aglomeração de um único super-grupo no painel do K-Means, a explosão de pontos cinzas (ruído) no DBSCAN e a sobre-segmentação no GMM, em nítido contraste com as fronteiras equilibradas estabelecidas pelos medoides do PAM.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=1\linewidth]{cluster1.pdf}
-    \caption{Projeção Espacial (MDS) dos 7 Algoritmos de Aprendizado de Máquina Não Supervisionados.}
+    \includegraphics[width=1.1\linewidth]{cluster1.pdf}
+    \caption{Projeção Espacial (MDS) dos 10 Algoritmos de Aprendizado de Máquina Não Supervisionados.}
     \label{fig:painel_algoritmos}
 \end{figure}
 
 Para consolidar esta evidência visual com rigor matemático, a análise quantitativa apresentada na Tabela~\ref{tab:metricas_algoritmos_completa} corrobora a robustez metodológica do algoritmo PAM para o escopo desta pesquisa. O particionamento em torno de medoides atingiu o Índice de Silhueta mais elevado do painel ($S = 0,15$), refletindo uma coesão estrutural significativamente superior às demais abordagens, ao mesmo tempo em que garantiu o maior percentual de variância explicada validada ($35,7\%$).
 
-\newpage
 \begin{table}[htbp]
 \centering
-\caption{Avaliação de Métricas de Desempenho e Concordância dos Algoritmos Não Supervisionados}
+\caption{Avaliação de Métricas de Desempenho e Concordância dos 10 Algoritmos Não Supervisionados}
 \label{tab:metricas_algoritmos_completa}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{@{}lccccc@{}}
 \toprule
 \textbf{Algoritmo} & \textbf{Clusters} & \textbf{Silhueta ($S$)} & \textbf{Pseudo-$R^2$} & \textbf{Inércia} & \textbf{ARI} \\ 
 \midrule
-\textbf{1. PAM (Modelo Oficial)}      & 3 & 0,15 & 35,7\% & 23,90 & \textbf{1,000} \\
-       2. CLARA                       & 3 & 0,07 & 22,9\% & 27,64 & 0,292 \\
-       3. K-Modes                     & 3 & 0,07 & 35,4\% & 23,16 & 0,405 \\
-       4. Algoritmo Evolutivo (MOCK)* & 3 & 0,03 & 2,8\% & 25,74  & 0,040 \\
-       5. Modelo Gaussiano (GMM)      & 4 & 0,04 & 33,4\% & 21,17 & 0,127 \\
-6. DBSCAN & 5** & -0,01 & 10,9\% & 31,95 & 0,070 \\
-7. Fuzzy C-Means & 3 & 0,03 & 5,4\% & 33,92 & 0,060 \\
-8. K-Means & 3 & 0,08 & 3,2\% & 34,72 & 0,090 \\ 
+\textbf{1. PAM (K-Medoids)}      & \textbf{3} & \textbf{0,15} & \textbf{35,7\%} & \textbf{23,90} & \textbf{1,000} \\
+2. AGNES (Hierárquico)           & 3 & 0,09 & 31,8\% & 20,87 & 0,370 \\
+3. CLARA                         & 3 & 0,07 & 22,9\% & 27,64 & 0,292 \\
+4. K-Modes                       & 3 & 0,07 & 35,4\% & 23,16 & 0,405 \\
+5. Fuzzy K-Modes                 & 3 & 0,01 & 8,9\%  & 21,93 & 0,383 \\
+6. Fuzzy C-Means                 & 3 & 0,03 & 5,4\%  & 33,92 & 0,060 \\
+7. Algoritmo Evolutivo (MOCK)*   & 3 & 0,03 & 2,8\%  & 25,74 & 0,040 \\
+8. Modelo Gaussiano (GMM)        & 5 & 0,04 & 33,4\% & 21,17 & 0,127 \\
+9. DBSCAN                        & 3** & -0,01 & 10,9\% & 31,95 & 0,070 \\
+10. K-Means                      & 3 & 0,08 & 3,2\%  & 34,72 & 0,090 \\ 
 \bottomrule
 \multicolumn{6}{l}{\footnotesize \textbf{Nota}: *Simulação de particionamento evolutivo (NSGA-II) com penalidade de conectividade.} \\
-\multicolumn{6}{l}{\footnotesize \textbf{Nota}: **O DBSCAN gerou 1 grupo principal de ruído espacial e 4 micro-clusters de densidade.} \\
+\multicolumn{6}{l}{\footnotesize \textbf{Nota}: **O DBSCAN gerou 1 grupo principal de ruído espacial e 2 micro-clusters de densidade.} \\
 \end{tabular}%
 }
 \end{table}
 
+\newpage
+A aplicação do algoritmo hierárquico aglomerativo (AGNES) consolidou a premissa de que a métrica de Gower é o motor matemático mais adequado para a matriz qualitativa do estudo. O método Ward gerou a menor inércia da tabela ($20,87$) e alcançou uma notável variância explicada ($31,8\%$). Sua concordância moderada-alta com o modelo oficial (ARI $= 0,370$) e a segunda melhor marca estrutural ($S = 0,09$) atestam que, independentemente da abordagem topológica ser de particionamento medóide (PAM) ou fusão hierárquica (AGNES), os dados comportamentais sustentam a mesma taxonomia de três agrupamentos distintos.
 
-A análise quantitativa consolidada na Tabela~\ref{tab:metricas_algoritmos_completa} corrobora a robustez metodológica do algoritmo PAM para o escopo desta pesquisa. O particionamento em torno de medoides atingiu o Índice de Silhueta mais elevado do painel ($S = 0,15$), refletindo uma coesão estrutural significativamente superior às demais abordagens, ao mesmo tempo em que garantiu o maior percentual de variância explicada validada ($35,7\%$).
+Embora o Modelo Gaussiano (GMM) também tenha apresentado uma inércia espacial reduzida ($21,17$), este resultado configura-se como um artefato matemático de sobre-segmentação. Ao forçar a criação de agrupamentos adicionais ($K=5$), o modelo reduziu artificialmente a dispersão interna, mas sacrificou severamente a validade topológica, resultando em uma silhueta fraca ($S = 0,04$) e baixa concordância com a estrutura latente (ARI $= 0,127$). O PAM manteve a parcimônia necessária para a interpretação sociológica ($K=3$) ostentando uma inércia altamente competitiva ($23,90$).
 
-Embora o Modelo Gaussiano (GMM) tenha apresentado a menor inércia espacial da tabela ($21,17$), este resultado configura-se como um artefato da sobre-segmentação. Ao forçar a criação de um quarto agrupamento ($K=4$), o modelo reduziu artificialmente a dispersão interna, mas sacrificou severamente a validade topológica, resultando em uma silhueta fraca ($S = 0,04$) e baixa concordância com a estrutura latente real (ARI $= 0,127$). O PAM manteve a parcimônia necessária para a interpretação sociológica ($K=3$) ostentando uma inércia altamente competitiva ($23,90$).
+Destaca-se também o colapso dos modelos baseados puramente em médias euclidianas. O K-Means obteve a pior capacidade explicativa do painel, capturando apenas $3,2\%$ da variância comportamental, aliada à maior dispersão interna (Inércia de $34,72$). Da mesma forma, o algoritmo probabilístico DBSCAN resultou em uma silhueta negativa ($-0,01$), provando a inexistência de esferas de densidade contínuas nos dados de inquérito categórico.
 
-Destaca-se também o colapso dos modelos baseados puramente em médias euclidianas. O K-Means obteve a pior capacidade explicativa do painel, capturando apenas 3,2\% da variância comportamental, aliada à maior dispersão interna (Inércia de $34,72$). Da mesma forma, o algoritmo probabilístico DBSCAN resultou em uma silhueta negativa ($-0,01$), provando a inexistência de esferas de densidade contínuas nos dados de \textit{survey}. 
+A expansão da análise para abordagens difusas e genéticas confirmou a rigidez das fronteiras comportamentais mapeadas. O algoritmo Fuzzy K-Modes obteve a terceira melhor concordância topológica com o modelo oficial (ARI $= 0,383$), porém colapsou na métrica de isolamento ($S = 0,01$), comprovando que a tentativa de suavizar fronteiras de pertinência não beneficia matrizes de taxonomia sociológica. De forma análoga, a otimização multiobjetivo (MOCK) foi severamente penalizada pela profusão de empates na métrica de Gower, resultando na pior variância explicada da amostra ($2,8\%$) e atestando a ineficácia do rastreio de vizinhança evolutiva neste contexto.
 
-O algoritmo K-Modes figurou como o principal competidor topológico do PAM, apresentando o maior Índice Rand Ajustado (ARI $= 0,405$) entre as alternativas. Este valor indica uma concordância moderada-alta nas alocações, o que era esperado, dado que ambos os modelos são otimizados para lidar com vetores categóricos. Contudo, a flexibilidade analítica da métrica de Gower (PAM) sobre a contagem rígida do \textit{Simple Matching} (K-Modes) garantiu ao modelo oficial mais do que o dobro de qualidade estrutural na métrica de silhueta ($0,15$ contra $0,07$).
+Por fim, o algoritmo clássico K-Modes figurou como o principal competidor topológico do PAM (ARI $= 0,405$), demonstrando consistência no trato de vetores qualitativos. Contudo, a flexibilidade analítica da métrica de Gower aliada à ancoragem em indivíduos reais (Medoides) garantiu ao modelo oficial mais do que o dobro de qualidade estrutural (Silhueta) em relação à contagem rígida do \textit{Simple Matching} utilizada pelo K-Modes.
 
 \subsection{Validação Preditiva e Extração de Importância (Random Forest)}
 
@@ -283,10 +289,10 @@ Com a integridade topológica dos clusters comprovada preditivamente, procedeu-s
 \centering
 \caption{Ranking de Importância de Atributos (\textit{Random Forest}) na Segregação dos Perfis}
 \label{tab:rf_importancia}
-\begin{tabular}{@{}l|c|c@{}}
-\hline \hline
+\begin{tabular}{@{}lcc@{}}
+\toprule
    \textbf{Atributos}              & \textbf{Índice Gini} & \textbf{Peso Relativo (\%)} \\ 
-\hline \hline
+\midrule
 Frequência de Uso da Bicicleta     & \textbf{67,2} & \textbf{100,0\%} \\
 Destino Principal                  & \textbf{58,8} & \textbf{87,6\%} \\
 Bicicleta como Meio de Transporte (meses)  & \textbf{46,6} & \textbf{69,4\%} \\
@@ -306,7 +312,7 @@ Governo Incentiva Uso da Bicicleta & 7,5  & 11,2\% \\
 Tipo de Bicicleta                  & 4,7  & 7,1\% \\
 Sofreu Acidente(s)                 & 4,2  & 6,3\% \\
 Percepção sobre Infraestrutura     & 3,3  & 5,0\% \\ 
-\hline \hline
+\bottomrule
 \end{tabular}%
 \end{table}
 
@@ -314,11 +320,12 @@ A Tabela~\ref{tab:rf_importancia} consolida o ranking de importância das variá
 
 A "Frequência de Uso" estabeleceu-se como o preditor máximo do modelo (peso relativo de 100\%), seguida imediatamente pelo "Destino Principal" (87,6\%) e pelo "Tempo Como Meio de Transporte" (69,4\%). Esta tríade comprova que a diferença matemática latente entre os ciclistas paraenses não reside primeiramente em quem eles são, mas sim na intensidade e no propósito de seus deslocamentos. A "Ocupação Principal" (68,5\%) atua como o elo socioeconômico de maior peso, delimitando a fronteira entre os trabalhadores informais (Perfil 1) e o público de mercado formal e lazer (Perfis 2 e 3).
 
+\newpage
 Em contrapartida, variáveis identitárias tradicionalmente utilizadas como norteadores primários em pesquisas de mobilidade, como "Renda Mensal" (36,3\%), "Faixa Etária" (28,2\%) e "Gênero" (25,0\%), apresentaram um poder discriminatório secundário. Do ponto de vista de políticas públicas e da \textit{Explainable AI}, este ranqueamento sugere que intervenções governamentais não devem ser segmentadas apenas por recortes demográficos genéricos, mas sim desenhadas para atender a propósitos específicos de viagem priorizando infraestruturas de longa distância e rotas de trabalho para os usuários utilitários crônicos, e circuitos integrados a polos de serviço para os usuários emergentes de saúde e lazer.
 
 \section{Considerações Finais}
 
-Este estudo propôs e validou um \textit{framework} analítico fundamentado em Aprendizado de Máquina para a extração de perfis comportamentais de ciclistas no estado do Pará, superando as limitações empíricas de abordagens estatísticas tradicionais. A avaliação comparativa de sete algoritmos não supervisionados demonstrou, de forma categórica, que a aplicação do particionamento em torno de medoides (PAM) associado à métrica de dissimilaridade de \textit{Gower} é a abordagem metodológica mais robusta para a estruturação de dados categóricos de \textit{survey}. Modelos baseados em médias euclidianas (K-Means) e espalhamento por densidade (DBSCAN) mostraram-se matematicamente inaptos para lidar com a dimensionalidade qualitativa das respostas.
+Este estudo propôs e validou um \textit{framework} analítico fundamentado em Aprendizado de Máquina para a extração de perfis comportamentais de ciclistas no estado do Pará, superando as limitações empíricas de abordagens estatísticas tradicionais. A avaliação comparativa de dez algoritmos não supervisionados demonstrou, de forma categórica, que a aplicação do particionamento em torno de medoides (PAM) associado à métrica de dissimilaridade de \textit{Gower} é a abordagem metodológica mais robusta para a estruturação de dados categóricos de \textit{survey}. Modelos baseados em médias euclidianas (K-Means) e espalhamento por densidade (DBSCAN) mostraram-se matematicamente inaptos para lidar com a dimensionalidade qualitativa das respostas.
 
 A taxonomia estruturada pelo algoritmo revelou que os ciclistas paraenses não formam uma população homogênea, dividindo-se em três perfis latentes. A validação preditiva conduzida pela \textit{Random Forest}, que obteve 100\% de acurácia na reclassificação cruzada, confirmou a integridade topológica destas partições. Ademais, a extração de importância via Índice \textit{Gini} proporcionou uma descoberta crucial: a matriz de mobilidade ativa é regida primariamente por determinantes utilitários (Frequência de Uso, Destino e Tempo de Deslocamento), sobrepondo-se significativamente aos marcadores demográficos clássicos, como gênero, renda e faixa etária.
 
