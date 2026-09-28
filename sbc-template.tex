@@ -6,14 +6,36 @@
 \usepackage[brazilian]{babel}
 \usepackage{booktabs} % Essencial para tabelas profissionais
 \usepackage{amsmath}
-
+\usepackage{orcidlink}
+\usepackage{textcase}
+\usepackage{ltxcmds}
+\usepackage{textcomp}
 \sloppy
 
 \title{Avaliação Comparativa de Algoritmos de Aprendizado de Máquina na Extração do Perfil Comportamental dos Ciclistas Paraenses em 2026}
 
-\begin{document}
-\address{}
+\author{
+Mário Diego Rocha Valente\inst{1}\orcidlink{0000-0001-7262-3336},
+Gabriel Baia da Silva\inst{1}\orcidlink{0009-0003-0404-5046}, \\
+Romeu Wilson Cabral de Araújo\inst{2}\orcidlink{0009-0002-3796-9854},
+Kleber Bezerra Salim\inst{3}\orcidlink{0000-0002-8566-3238}
+}
 
+\address{
+Faculdade de Computação -- Universidade Federal do Pará (UFPA)\inst{1}
+\nextinstitute
+Faculdade de Estatística -- Universidade Federal do Pará (UFPA)\inst{2}
+\nextinstitute
+Departamento de Trânsito do Estado do Pará (DETRAN-PA)\inst{3}
+\email{
+\{diego.vatente,gabrielkadran,rwaraujo1\}@gmail.com,
+kleber.salim@detran.pa.gov.br
+}
+}
+
+
+\begin{document}
+\pagestyle{empty}
 \maketitle
 
 \begin{resumo} 
@@ -127,48 +149,138 @@ O instrumento de coleta consiste em um questionário estruturado, composto predo
 \section{Resultados e Discussão}
 \subsection{Análise Descritiva de Dados}
 
-A extração descritiva consolidada na Tabela~\ref{tab:perfil_grupos} traduz os padrões latentes capturados pelo modelo PAM em personas sociológicas distintas. O particionamento refuta a premissa de um público ciclista homogéneo, evidenciando que a infraestrutura cicloviária abriga desde utilizadores crónicos e vulneráveis até novos adeptos focados no bem-estar.
-
-O \textbf{Grupo 1} configura o perfil do \textbf{Ciclista Utilitário Histórico e Vulnerável}. Composto maioritariamente por homens ($67,1\%$) residentes em Marabá, este cluster caracteriza-se pela forte presença no setor informal ($28,3\%$) e rendimentos até um salário mínimo ($56,3\%$). Para estes indivíduos, a bicicleta é uma ferramenta vital de sobrevivência económica ($52\%$): pedalam todos os dias ($56\%$) com destino ao trabalho ($46,6\%$), e acumulam mais de seis anos de dependência deste modo de transporte ($70,9\%$).
-
-O \textbf{Grupo 2} delineia o \textbf{Ciclista Utilitário Jovem e Formal}. Com forte representatividade em Castanhal, destaca-se por uma inversão demográfica (maioria feminina, $69,3\%$) e por congregar o estrato mais jovem da amostra ($58,7\%$ entre 19 e 29 anos). Embora também utilizem a bicicleta para deslocações pendulares diárias ligadas ao trabalho, distinguem-se do Grupo 1 pela inserção sólida no mercado formal ($45,3\%$) e pela escolaridade intermédia consolidada ($72,1\%$). Representam a classe trabalhadora jovem que adota a mobilidade ativa por eficiência e economia.
-
-Em oposição geométrica e sociológica, o \textbf{Grupo 3} emerge como o \textbf{Ciclista de Lazer e Saúde}. Este perfil, também dominado por mulheres ($75,8\%$), concentra o público de maior capital socioeconómico (ensino superior, $53\%$; rendimentos entre 1 e 3 salários, $54\%$). O seu comportamento diverge radicalmente dos anteriores: são novos adotantes (uso inferior a 6 meses, $39,4\%$), que pedalam apenas 1 a 2 dias por semana em trajetos curtos (até 10 minutos). A motivação é estritamente ligada aos benefícios para a saúde ($35,9\%$) e atividades sociais/lazer ($42,4\%$).
-
-Apesar da profunda heterogeneidade estrutural, a mineração de dados revela um consenso transversal quanto à hostilidade da malha urbana. Independentemente do rendimento, género ou frequência de uso, o sentimento de insegurança e de desamparo estatal é unânime. Os três perfis identificam a alta velocidade dos veículos motorizados e a ausência de infraestrutura/iluminação adequada como os riscos primários, convergindo na perceção de que o governo não incentiva a mobilidade ciclável (taxas de rejeição em torno de $80\%$ a $84\%$).
+A extração do perfil estatístico apresentada na Tabela~\ref{tab:fisher_clusters} não atesta apenas a geometria topológica do algoritmo PAM, mas confirma a significância sociológica da taxonomia alcançada. A aplicação do Teste Exato de Fisher (com simulação de Monte Carlo de 2000 replicações) evidenciou valores-p inferiores a $0,001$ em catorze das quinze dimensões analisadas incluindo Gênero, Escolaridade, Renda e Frequência de Uso. Essa rejeição sumária da hipótese nula atesta que as características de cada perfil não são flutuações amostrais casuais, mas evidências irrefutáveis de que a malha urbana abriga subpopulações de ciclistas com demandas e vulnerabilidades estritamente distintas. Destaca-se que o único atributo a apresentar menor variância ($p = 0,032$) foi a autodeclaração de Cor/Raça, sugerindo que a exclusão e a distribuição demográfica estrutural na região afetam o ciclista paraense de forma mais horizontal."
 
 \begin{table}[htbp]
 \centering
-\caption{Perfil Estatístico e Comportamental dos Ciclistas Paraenses por Grupo (2026)}
-\label{tab:perfil_grupos}
+\caption{Análise de Perfil e Comportamento dos Clusters (Teste Exato de Fisher)}
+\label{tab:fisher_clusters}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}lccccc@{}}
 \toprule
-\textbf{Características} & \textbf{Grupo 1} & \textbf{Grupo 2} & \textbf{Grupo 3} \\ 
+\textbf{Características Sociodemográficas} & \textbf{Geral (N=833)} & \textbf{Perfil 1 (N=445)} & \textbf{Perfil 2 (N=231)} & \textbf{Perfil 3 (N=157)} & \textbf{Valor-p} \\ 
 \midrule
-Município & Marabá (12.9\%) & Castanhal (18.4\%) & Marabá (26.8\%) \\
-Tipo de Bicicleta & Convencional (98.6\%) & Convencional (84.4\%) & Convencional (91.9\%) \\
-Gênero & Masculino (67.1\%) & Feminino (69.3\%) & Feminino (75.8\%) \\
-Faixa Etária & De 30 a 49 anos (34.6\%) & De 19 a 29 anos (58.7\%) & De 30 a 49 anos (41.4\%) \\
-Raça & Parda (9.4\%) & Parda (67.6\%) & Parda (57.1\%) \\
-Escolaridade & Ensino médio (50\%) & Ensino médio (72.1\%) & Ensino superior (53\%) \\
-Ocupação Principal & Trab. informal (28.3\%) & Trab. formal (45.3\%) & Trab. formal (46.5\%) \\
-Renda Mensal & Até 1 salário mínimo (56.3\%) & De 1 a 3 sal. mínimos (49.2\%) & De 1 a 3 sal. mínimos (54\%) \\
-Frequência de Uso & Todos os dias (56\%) & Todos os dias (38.5\%) & De 1 a 2 dias/semana (77.3\%) \\
-Tempo Médio (Uso) & Até 20 minutos (32.6\%) & Até 20 minutos (39.7\%) & Até 10 minutos (50.5\%) \\
-Tempo como Transporte & Acima de 6 anos (70.9\%) & Acima de 6 anos (32.4\%) & Menos de 6 meses (39.4\%) \\
-Destino Principal & Trabalho (46.6\%) & Trabalho (41.9\%) & Lazer ou ativ. sociais (42.4\%) \\
-Maior Motivação & Economia financeira (52\%) & Economia financeira (38.5\%) & Benefícios à saúde (35.9\%) \\
-Sofreu Acidente(s) & Não (74.9\%) & Não (78.8\%) & Não (85.4\%) \\
-Bicicleta Furtada & Não (70.3\%) & Não (75.4\%) & Não (74.2\%) \\
-Risco ao Pedalar & Vel. Veículos / Falta infra. (46.3\%) & Vel. Veículos / Falta infra. (45.8\%) & Falta infra. / Iluminação (23.2\%) \\
-Usa + a Bike Pós-COVID & Sim (54.6\%) & Sim (50.3\%) & Não (65.2\%) \\
-Governo Incentiva Uso & Não (79.7\%) & Parcialmente (44.7\%) & Não (84.8\%) \\ 
+\textbf{Gênero} & & & & & $\mathbf{< 0,001}$ \\
+\quad Masculino & 404 (48\%) & 290 (65\%) & 58 (25\%) & 56 (36\%) & \\
+\quad Feminino & 429 (52\%) & 155 (35\%) & 173 (75\%) & 101 (64\%) & \\
+
+\textbf{Faixa Etária} & & & & & $\mathbf{< 0,001}$ \\
+\quad De 12 a 29 anos & 395 (47\%) & 151 (34\%) & 152 (65\%) & 92 (59\%) & \\
+\quad De 30 a 49 anos & 264 (32\%) & 158 (36\%) & 61 (26\%) & 45 (29\%) & \\
+\quad 50 anos ou mais & 174 (21\%) & 136 (30\%) & 18 (8\%) & 20 (12\%) & \\
+
+\textbf{Cor/Raça} & & & & & \textbf{0,032} \\
+\quad Parda / Preta & 669 (80\%) & 374 (84\%) & 178 (77\%) & 117 (74\%) & \\
+\quad Branca & 136 (16\%) & 54 (12\%) & 45 (19\%) & 37 (24\%) & \\
+\quad Outras (Amarela/Indígena) & 28 (4\%) & 17 (4\%) & 8 (4\%) & 3 (2\%) & \\
+
+\textbf{Grau de Escolaridade} & & & & & $\mathbf{< 0,001}$ \\
+\quad Fundamental ou Sem Instrução & 217 (26\%) & 182 (41\%) & 21 (9\%) & 14 (9\%) & \\
+\quad Ensino Médio & 402 (48\%) & 217 (49\%) & 115 (50\%) & 70 (45\%) & \\
+\quad Superior ou Pós-Graduação & 214 (26\%) & 46 (10\%) & 95 (41\%) & 73 (46\%) & \\
+
+\textbf{Renda Familiar Mensal} & & & & & $\mathbf{< 0,001}$ \\
+\quad Sem renda & 79 (9,5\%) & 53 (12\%) & 15 (6,5\%) & 11 (7\%) & \\
+\quad Até 1 salário mínimo & 346 (42\%) & 233 (52\%) & 87 (38\%) & 26 (17\%) & \\
+\quad De 1 a 3 salários mínimos & 300 (36\%) & 131 (29\%) & 74 (32\%) & 95 (61\%) & \\
+\quad Acima de 3 salários mínimos & 108 (13\%) & 28 (6\%) & 55 (24\%) & 25 (16\%) & \\
+
+\textbf{Ocupação Principal} & & & & & $\mathbf{< 0,001}$ \\
+\quad Trabalhador Formal & 273 (33\%) & 116 (26\%) & 119 (52\%) & 38 (24\%) & \\
+\quad Trabalhador Informal / Autônomo & 265 (32\%) & 207 (47\%) & 17 (7\%) & 41 (26\%) & \\
+\quad Estudante & 151 (18\%) & 38 (8,5\%) & 65 (28\%) & 48 (31\%) & \\
+\quad Outros (Desempregado/Aposentado/Comb.) & 144 (17\%) & 84 (19\%) & 30 (13\%) & 30 (19\%) & \\
+
+\midrule
+\textbf{Comportamento Cicloviário} & & & & & \\
+\midrule
+
+\textbf{Frequência de Uso} & & & & & $\mathbf{< 0,001}$ \\
+\quad De 1 a 2 dias por semana & 285 (34\%) & 43 (10\%) & 149 (65\%) & 93 (59\%) & \\
+\quad De 3 a 6 dias por semana & 212 (26\%) & 116 (26\%) & 57 (25\%) & 39 (25\%) & \\
+\quad Todos os dias & 336 (40\%) & 286 (64\%) & 25 (11\%) & 25 (16\%) & \\
+
+\textbf{Tempo como Transporte} & & & & & $\mathbf{< 0,001}$ \\
+\quad Menos de 1 ano & 192 (23\%) & 42 (9\%) & 120 (52\%) & 30 (19\%) & \\
+\quad De 1 a 6 anos & 179 (21\%) & 81 (18\%) & 66 (29\%) & 32 (20\%) & \\
+\quad Acima de 6 anos & 462 (55\%) & 322 (72\%) & 45 (19\%) & 95 (61\%) & \\
+
+\textbf{Destino Principal} & & & & & $\mathbf{< 0,001}$ \\
+\quad Trabalho & 313 (38\%) & 257 (58\%) & 33 (14\%) & 23 (15\%) & \\
+\quad Estudo (Escola/Faculdade) & 98 (12\%) & 37 (8\%) & 32 (14\%) & 29 (18\%) & \\
+\quad Compras / Serviços & 123 (15\%) & 75 (17\%) & 25 (11\%) & 23 (15\%) & \\
+\quad Lazer / Atividades Sociais / Saúde & 216 (26\%) & 41 (9\%) & 111 (48\%) & 64 (41\%) & \\
+\quad Múltiplos Destinos & 83 (10\%) & 35 (8\%) & 30 (13\%) & 18 (11\%) & \\
+
+\textbf{Motivo do Uso} & & & & & $\mathbf{< 0,001}$ \\
+\quad Economia financeira & 325 (39\%) & 249 (56\%) & 44 (19\%) & 32 (20\%) & \\
+\quad Benefícios à saúde & 235 (28\%) & 75 (17\%) & 97 (42\%) & 63 (40\%) & \\
+\quad Rapidez e praticidade & 117 (14\%) & 66 (15\%) & 27 (12\%) & 24 (15\%) & \\
+\quad Sustentabilidade / Outros / Múltiplos & 156 (19\%) & 55 (12\%) & 63 (27\%) & 38 (24\%) & \\
+
+\textbf{Bicicleta Roubada / Furtada} & & & & & $\mathbf{< 0,001}$ \\
+\quad Sim & 236 (28\%) & 126 (28\%) & 26 (11\%) & 84 (54\%) & \\
+\quad Não & 597 (72\%) & 319 (72\%) & 205 (89\%) & 73 (46\%) & \\
+
+\textbf{Aumento de Uso Pós-COVID} & & & & & $\mathbf{< 0,001}$ \\
+\quad Sim & 362 (43\%) & 245 (55\%) & 92 (40\%) & 25 (16\%) & \\
+\quad Não / Não utilizava antes & 471 (57\%) & 200 (45\%) & 139 (60\%) & 132 (84\%) & \\
 \bottomrule
+\multicolumn{6}{l}{\footnotesize \textbf{Nota}: Valores-p calculados via Teste Exato de Fisher (simulação de Monte Carlo com 2000 replicações).} \\
 \end{tabular}%
 }
 \end{table}
 
+
+
+%A extração descritiva consolidada na Tabela~\ref{tab:perfil_grupos} traduz os padrões latentes capturados pelo modelo PAM em personas sociológicas distintas. O particionamento refuta a premissa de um público ciclista homogéneo, evidenciando que a infraestrutura cicloviária abriga desde utilizadores crónicos e vulneráveis até novos adeptos focados no bem-estar.
+
+%O \textbf{Grupo 1} configura o perfil do \textbf{Ciclista Utilitário Histórico e Vulnerável}. Composto maioritariamente por homens ($67,1\%$) residentes em Marabá, este cluster caracteriza-se pela forte presença no setor informal ($28,3\%$) e rendimentos até um salário mínimo ($56,3\%$). Para estes indivíduos, a bicicleta é uma ferramenta vital de sobrevivência económica ($52\%$): pedalam todos os dias ($56\%$) com destino ao trabalho ($46,6\%$), e acumulam mais de seis anos de dependência deste modo de transporte ($70,9\%$).
+
+%O \textbf{Grupo 2} delineia o \textbf{Ciclista Utilitário Jovem e Formal}. Com forte representatividade em Castanhal, destaca-se por uma inversão demográfica (maioria feminina, $69,3\%$) e por congregar o estrato mais jovem da amostra ($58,7\%$ entre 19 e 29 anos). Embora também utilizem a bicicleta para deslocações pendulares diárias ligadas ao trabalho, distinguem-se do Grupo 1 pela inserção sólida no mercado formal ($45,3\%$) e pela escolaridade intermédia consolidada ($72,1\%$). Representam a classe trabalhadora jovem que adota a mobilidade ativa por eficiência e economia.
+
+%Em oposição geométrica e sociológica, o \textbf{Grupo 3} emerge como o \textbf{Ciclista de Lazer e Saúde}. Este perfil, também dominado por mulheres ($75,8\%$), concentra o público de maior capital socioeconómico (ensino superior, $53\%$; rendimentos entre 1 e 3 salários, $54\%$). O seu comportamento diverge radicalmente dos anteriores: são novos adotantes (uso inferior a 6 meses, $39,4\%$), que pedalam apenas 1 a 2 dias por semana em trajetos curtos (até 10 minutos). A motivação é estritamente ligada aos benefícios para a saúde ($35,9\%$) e atividades sociais/lazer ($42,4\%$).
+
+%Apesar da profunda heterogeneidade estrutural, a mineração de dados revela um consenso transversal quanto à hostilidade da malha urbana. Independentemente do rendimento, género ou frequência de uso, o sentimento de insegurança e de desamparo estatal é unânime. Os três perfis identificam a alta velocidade dos veículos motorizados e a ausência de infraestrutura/iluminação adequada como os riscos primários, convergindo na perceção de que o governo não incentiva a mobilidade ciclável (taxas de rejeição em torno de $80\%$ a $84\%$).
+
+%\begin{table}[htbp]
+%\centering
+%\caption{Perfil Estatístico e Comportamental dos Ciclistas Paraenses por Grupo (2026)}
+%\label{tab:perfil_grupos}
+%\resizebox{\textwidth}{!}{%
+%\begin{tabular}{@{}lccc@{}}
+%toprule
+%\textbf{Características} & \textbf{Grupo 1} & \textbf{Grupo 2} & \textbf{Grupo 3} \\ 
+%\midrule
+%Município & Marabá (12.9\%) & Castanhal (18.4\%) & Marabá (26.8\%) \\
+%Tipo de Bicicleta & Convencional (98.6\%) & Convencional (84.4\%) & Convencional (91.9\%) \\
+%Gênero & Masculino (67.1\%) & Feminino (69.3\%) & Feminino (75.8\%) \\
+%Faixa Etária & De 30 a 49 anos (34.6\%) & De 19 a 29 anos (58.7\%) & De 30 a 49 anos (41.4\%) \\
+%Raça & Parda (9.4\%) & Parda (67.6\%) & Parda (57.1\%) \\
+%Escolaridade & Ensino médio (50\%) & Ensino médio (72.1\%) & Ensino superior (53\%) \\
+%Ocupação Principal & Trab. informal (28.3\%) & Trab. formal (45.3\%) & Trab. formal (46.5\%) \\
+%Renda Mensal & Até 1 salário mínimo (56.3\%) & De 1 a 3 sal. mínimos (49.2\%) & De 1 a 3 sal. mínimos (54\%) \\
+%Frequência de Uso & Todos os dias (56\%) & Todos os dias (38.5\%) & De 1 a 2 dias/semana (77.3\%) \\
+%Tempo Médio (Uso) & Até 20 minutos (32.6\%) & Até 20 minutos (39.7\%) & Até 10 minutos (50.5\%) \\
+%Tempo como Transporte & Acima de 6 anos (70.9\%) & Acima de 6 anos (32.4\%) & Menos de 6 meses (39.4\%) \\
+%Destino Principal & Trabalho (46.6\%) & Trabalho (41.9\%) & Lazer ou ativ. sociais (42.4\%) \\
+%Maior Motivação & Economia financeira (52\%) & Economia financeira (38.5\%) & Benefícios à saúde (35.9\%) \\
+%Sofreu Acidente(s) & Não (74.9\%) & Não (78.8\%) & Não (85.4\%) \\
+%Bicicleta Furtada & Não (70.3\%) & Não (75.4\%) & Não (74.2\%) \\
+%Risco ao Pedalar & Vel. Veículos / Falta infra. (46.3\%) & Vel. Veículos / Falta infra. (45.8\%) & Falta %infra. / Iluminação (23.2\%) \\
+%Usa + a Bike Pós-COVID & Sim (54.6\%) & Sim (50.3\%) & Não (65.2\%) \\
+%Governo Incentiva Uso & Não (79.7\%) & Parcialmente (44.7\%) & Não (84.8\%) \\ 
+%\bottomrule
+%\end{tabular}%
+%}
+%\end{table}
+
+
+
+
+
+
+\newpage
 \subsection{Validação Cruzada: PAM versus Algoritmos Alternativos}
 
 Para atestar a estabilidade estrutural e a validade topológica dos três perfis descobertos, o particionamento oficial gerado pelo algoritmo PAM (com métrica de Gower) foi submetido a uma validação cruzada contra partições alternativas. A análise quantitativa revela o comportamento de cada heurística perante a complexidade dos dados categóricos de mobilidade.
@@ -243,8 +355,8 @@ Para consolidar esta evidência visual com rigor matemático, a análise quantit
 \caption{Avaliação de Métricas de Desempenho e Concordância dos 10 Algoritmos Não Supervisionados}
 \label{tab:metricas_algoritmos_completa}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccccc@{}}
-\toprule
+\begin{tabular}{@{}l|c|c|c|c|c@{}}
+\hline \hline
 \textbf{Algoritmo} & \textbf{Clusters} & \textbf{Silhueta ($S$)} & \textbf{Pseudo-$R^2$} & \textbf{Inércia} & \textbf{ARI} \\ 
 \midrule
 \textbf{1. PAM (K-Medoids)}      & \textbf{3} & \textbf{0,15} & \textbf{35,7\%} & \textbf{23,90} & \textbf{1,000} \\
@@ -257,7 +369,7 @@ Para consolidar esta evidência visual com rigor matemático, a análise quantit
 8. Modelo Gaussiano (GMM)        & 5 & 0,04 & 33,4\% & 21,17 & 0,127 \\
 9. DBSCAN                        & 3** & -0,01 & 10,9\% & 31,95 & 0,070 \\
 10. K-Means                      & 3 & 0,08 & 3,2\%  & 34,72 & 0,090 \\ 
-\bottomrule
+\hline \hline
 \multicolumn{6}{l}{\footnotesize \textbf{Nota}: *Simulação de particionamento evolutivo (NSGA-II) com penalidade de conectividade.} \\
 \multicolumn{6}{l}{\footnotesize \textbf{Nota}: **O DBSCAN gerou 1 grupo principal de ruído espacial e 2 micro-clusters de densidade.} \\
 \end{tabular}%
@@ -289,10 +401,10 @@ Com a integridade topológica dos clusters comprovada preditivamente, procedeu-s
 \centering
 \caption{Ranking de Importância de Atributos (\textit{Random Forest}) na Segregação dos Perfis}
 \label{tab:rf_importancia}
-\begin{tabular}{@{}lcc@{}}
-\toprule
+\begin{tabular}{@{}l|c|c@{}}
+\hline \hline
    \textbf{Atributos}              & \textbf{Índice Gini} & \textbf{Peso Relativo (\%)} \\ 
-\midrule
+\hline \hline
 Frequência de Uso da Bicicleta     & \textbf{67,2} & \textbf{100,0\%} \\
 Destino Principal                  & \textbf{58,8} & \textbf{87,6\%} \\
 Bicicleta como Meio de Transporte (meses)  & \textbf{46,6} & \textbf{69,4\%} \\
@@ -312,7 +424,7 @@ Governo Incentiva Uso da Bicicleta & 7,5  & 11,2\% \\
 Tipo de Bicicleta                  & 4,7  & 7,1\% \\
 Sofreu Acidente(s)                 & 4,2  & 6,3\% \\
 Percepção sobre Infraestrutura     & 3,3  & 5,0\% \\ 
-\bottomrule
+\hline \hline
 \end{tabular}%
 \end{table}
 
